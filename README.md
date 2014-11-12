@@ -1,4 +1,8 @@
-2II36
+Web-based Interactive Systems
 =====
 
-Web-based Interactive Systems
+
+Goals:
+
+Get a 10 on this project. 
+
