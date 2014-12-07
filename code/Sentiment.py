@@ -45,7 +45,7 @@ def Sentiment(data):
 
     # Calculate the probabilities that the tweets are happy or sad
     tweet_happy_prob, tweet_sad_prob = classifySentiment(tweet, happy_log_probs, sad_log_probs)
-    return tweet_happy_prob
+    return tweet_sad_prob
 
 happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
     #print "The probability that tweet1 (", tweet, ") is happy is ", tweet_happy_prob, "and the probability that it is sad is ", tweet_sad_prob
