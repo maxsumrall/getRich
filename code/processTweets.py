@@ -32,7 +32,7 @@ def calculateAverageSentiment():
 			countToday += 1.0
 			days[key] = (sumToday, countToday)
 	for key in days.keys():
-		print key + ": " + str(days[key][0]/days[key][1])
+		print key + ", " + str(days[key][0]/days[key][1])
 			
 
 
