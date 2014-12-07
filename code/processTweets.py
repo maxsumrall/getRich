@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo
+import os, json, subprocess, pymongo, GetRich
 from datetime import *
 
 client = pymongo.MongoClient()
@@ -46,7 +46,7 @@ def sentiment(tweet):
 
 def countEmotWords():
 	count = 0
-	for tweet in tweets.find(): #holy shit thats a lot of tweets.
+	for tweet in tweets.find():
 		if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
 			count += 1
 	print count
