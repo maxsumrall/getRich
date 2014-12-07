@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, GetRich
+import os, json, subprocess, pymongo, Sentiment
 from datetime import *
 
 client = pymongo.MongoClient()
