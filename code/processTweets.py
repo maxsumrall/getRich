@@ -28,7 +28,7 @@ def calculateAverageSentiment():
 				sumToday, countToday = days[key]
 			else:
 				sumToday, countToday = (0.0, 0.0)
-			sumToday += sentiment(tweet["text"])
+			sumToday += GetRich.Sentiment(tweet["text"])
 			countToday += 1.0
 			days[key] = (sumToday, countToday)
 	for key in days.keys():
