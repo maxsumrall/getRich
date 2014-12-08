@@ -44,7 +44,7 @@ def calculateMoodsSentiment():
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
             date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
-            tweetMoods = plutchik.executeTweet(tweet["text"])[1]
+            tweetMoods = plutchik.executeTweet(tweet["text"])
             if key in days.keys():
                 for i in range(len(tweetMoods)):
                     days[key][0][i] += tweetMoods[i]
