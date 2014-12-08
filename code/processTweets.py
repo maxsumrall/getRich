@@ -54,7 +54,7 @@ def calculateMoodsSentiment():
                 days[key] = [sentiments, 1.0]
 
 
-    print "day,mood1,mood2,mood3.mood4,mood5,mood6,mood7"
+    print "day,mood1,mood2,mood3,mood4,mood5,mood6,mood7"
     for key in days.keys():
         sentiments, count = days[key]
         print key \
