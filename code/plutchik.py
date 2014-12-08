@@ -52,6 +52,10 @@ emotions = [
     Emotion("anticipation")
     ]
 
+negations = ("n't", "0", "aint", "arent", "cant", "couldnt", "darent", "didnt", "doesnt", "dont", "hadnt", "hasnt", "havent",
+             "isnt", "mightnt", "mustnt", "neednt", "never", "no", "not", "oughtnt", "shant", "shouldnt", "w/o", "wasnt",
+             "werent", "without", "wont", "wouldnt", "zero")
+
 def executeTweet(tweet):
     # prepare tweet
     tweet = tweet.replace("~",  "").replace("#", "").replace("_", "").replace("?",  "").replace("\"", "").replace("\'", "").replace("*",  "")
