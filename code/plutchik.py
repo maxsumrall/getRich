@@ -55,10 +55,10 @@ def executeTweet(tweet):
     # init
     res = [0 for x in range(len(emotions))]
 
-    for emotion in emotions:
+    for index, emotion in enumerate(emotions):
         # execute the regex on the tweet for each emotion
-        res.append(executeRegex(emotion.regex, tweet))
-    # print res
+        res[index] = executeRegex(emotion.regex, tweet)
+    print res
     return res
 
 def executeRegex(regex_string, tweet):
@@ -73,4 +73,4 @@ def executeRegex(regex_string, tweet):
     return len(result)
 
 # testing stuff
-# executeTweet("tolera wear his heart on his sleeves")
+executeTweet("tolera wear his heart on his sleeves")
