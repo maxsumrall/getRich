@@ -2,21 +2,62 @@ __author__ = 'giedomak'
 
 import re
 
-emotions = ("anger", "anticipation", "disgust", "fear", "joy", "sadness", "surprise", "trust")
+# workflow:
+# 1. get regular expressions from the files
+# 2. match regex on the tweet
+# 3. normalize the results
 
-regexes = []
-for emotion in emotions:
-    # create regexes with their emotions
-    inner_regex = ('|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines()))
-    regex_tmp = '(' + inner_regex + ')'
-    print regex_tmp
-    regexes.append((emotion, regex_tmp))
+class Emotion:
+    name = ""
+    regex = ""
+
+    def __init__(self, name):
+        self.name = name
+        self.getRegex()
+
+    def getRegex(self):
+        # load and create regexes
+        inner_regex = ('|'.join(open('plutchik/'+self.name+'.txt', 'r').read().splitlines()))
+        self.regex = '(' + inner_regex + ')'
+
+    def getOppositeEmotion(self):
+        if self.name is 'joy':
+            return "sadness"
+        elif self.name is 'trust':
+            return 'disgust'
+        elif self.name is 'fear':
+            return 'anger'
+        elif self.name is 'surprise':
+            return 'anticipation'
+        elif self.name is 'sadness':
+            return 'joy'
+        elif self.name is 'disgust':
+            return 'trust'
+        elif self.name is 'anger':
+            return 'fear'
+        elif self.name is 'anticipation':
+            return 'surprise'
+
+
+# list with the emotions
+emotions = [
+    Emotion("joy"),
+    Emotion("trust"),
+    Emotion("fear"),
+    Emotion("surprise"),
+    Emotion("sadness"),
+    Emotion("disgust"),
+    Emotion("anger"),
+    Emotion("anticipation")
+    ]
 
 def executeTweet(tweet):
-    res = []
-    for regex in regexes:
+    # init
+    res = [0 for x in range(len(emotions))]
+
+    for emotion in emotions:
         # execute the regex on the tweet for each emotion
-        res.append(executeRegex(regex[1], tweet))
+        res.append(executeRegex(emotion.regex, tweet))
     # print res
     return res
 
