@@ -2,36 +2,24 @@ __author__ = 'giedomak'
 
 import re
 
-def getPlutchik(tweet):
+emotions = ("anger", "anticipation", "disgust", "fear", "joy", "sadness", "surprise", "trust")
 
-
-    return 0
+regexes = []
+for emotion in emotions:
+    regexes.append((emotion,('|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines()))))
 
 def executeTweet(tweet):
-    print tweet
-    executeRegex('anger', tweet)
-    executeRegex('anticipation', tweet)
-    executeRegex('disgust', tweet)
-    executeRegex('fear', tweet)
-    executeRegex('joy', tweet)
-    executeRegex('sadness', tweet)
-    executeRegex('surprise', tweet)
-    executeRegex('trust', tweet)
-    print ''
+    res = []
+    for regex in regexes:
+     res.append(executeRegex(regex[1],tweet))
+    return res
 
-def executeRegex(emotion, tweet):
+def executeRegex(emotionRegex, tweet):
     # get the regex from the emotion
-    regex_tmp = '|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines())
+    regex_tmp = emotionRegex
     regex_string = '(\W|^)('+regex_tmp+')(\W|$)'
     # print regex_string
     regex = re.compile(regex_string, re.IGNORECASE)
 
     # execute the regex on the tweet
-    print emotion + ": " + str(len(regex.findall(tweet)))
-    return
-
-
-executeTweet('I am not as good as I thought. At least, I am in love and get laid everyday')
-executeTweet('oh no #fml')
-executeTweet('Fuck the rest of my sunny life')
-executeTweet('yeah')
+    return str(len(regex.findall(tweet)))

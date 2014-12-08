@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, Sentiment
+import os, json, subprocess, pymongo, plutchik, Sentiment
 from datetime import *
 
 client = pymongo.MongoClient()
@@ -40,21 +40,18 @@ def calculateMoodsSentiment():
     currDay = 0
     countToday = 1.0
     days = {}
-    for tweet in tweets.find():
+    for tweet in tweets.find()[:100]:
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
             date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
-            #tweetMoods = Sentiment.Sentiment(tweet["text"])
-            tweetMoods = (0.4,0.5,0.6,0.7,0.3,0.2,0.1)
+            tweetMoods = plutchik.executeTweet(tweet["text"])[1]
             if key in days.keys():
                 for i in range(len(tweetMoods)):
                     days[key][0][i] += tweetMoods[i]
             else:
-                sentiments = [tweetMoods[0],tweetMoods[1],tweetMoods[2],tweetMoods[3],tweetMoods[4],tweetMoods[5],tweetMoods[6]]
-                days[key] = [sentiments, 1.0]
+                days[key] = [tweetMoods, 1.0]
 
-
-    print "day,mood1,mood2,mood3,mood4,mood5,mood6,mood7"
+    print "day,anger,anticipation,disgust,fear,joy,sadness,surprise,trust"
     for key in days.keys():
         sentiments, count = days[key]
         print key \
