@@ -6,7 +6,7 @@ import re
 # 1. get regular expressions from the files
 # 2. match regex on the tweet
 # 3. normalize the results
-
+regexes = {}
 class Emotion:
     name = ""
     regex = ""
@@ -81,7 +81,11 @@ def executeTweet(tweet):
 
 def executeRegex(regex_string, tweet):
     # compile the regex with the flag IGNORECASE
-    regex = re.compile(regex_string, re.IGNORECASE)
+    if hash(regex_string) in regexes.keys():
+        regex = regexes[hash(regex_string)]
+    else:
+        regex = re.compile(regex_string, re.IGNORECASE)
+        regexes[hash(regex_string)] = regex
 
     # execute the regex on the tweet
     result = regex.findall(tweet)
