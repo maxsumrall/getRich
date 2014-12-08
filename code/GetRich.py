@@ -11,19 +11,20 @@ csecret = 'm29wgjcnLCcOTgQ5vQxjLK4i8bbSfls0qvaxj3iHQNvlelpNVl'
 atoken = '2891995534-E78xGPCQnR34msGEIAujG1XlpsxRqxTzZcAeKhv'
 asecret = 'icZjZQwjJEjgTEQJ2rlCy57cgY57a9Hb3EYBdjfB8CWDF'
 
-TweetFileHappy = codecs.open("TweetsHappy.txt", "w", "utf-8")
-TweetFileNeutral = codecs.open("TweetsNeutral.txt", "w", "utf-8")
-TweetFileSad = codecs.open("TweetsSad.txt", "w", "utf-8")
+#TweetFileHappy = codecs.open("TweetsHappy.txt", "w", "utf-8")
+#TweetFileNeutral = codecs.open("TweetsNeutral.txt", "w", "utf-8")
+#TweetFileSad = codecs.open("TweetsSad.txt", "w", "utf-8")
 
 
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
+
 def readSentimentList(file_name):
     ifile = open(file_name, 'r')
     happy_log_probs = {}
     sad_log_probs = {}
-    ifile.readline() #Ignore title row
+    ifile.readline()  # Ignore title row
 
     for line in ifile:
         tokens = line[:-1].split(',')
@@ -31,6 +32,7 @@ def readSentimentList(file_name):
         sad_log_probs[tokens[0]] = float(tokens[2])
 
     return happy_log_probs, sad_log_probs
+
 
 def classifySentiment(words, happy_log_probs, sad_log_probs):
     # Get the log-probability of each word under each sentiment
@@ -47,9 +49,10 @@ def classifySentiment(words, happy_log_probs, sad_log_probs):
 
     return prob_happy, prob_sad
 
+
 def Sentiment(data):
     # We load in the list of words and their log probabilities
-    #Moved to initStuff()
+    # Moved to initStuff()
     #happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
 
     tweet = data.split()
@@ -91,16 +94,17 @@ def Sentiment(data):
     #print "The probability that tweet1 (", tweet, ") is happy is ", tweet_happy_prob, "and the probability that it is sad is ", tweet_sad_prob
     #Load words for sentiment analysis
 
+
 happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
 
-class listener(StreamListener):
 
+class listener(StreamListener):
     def on_data(self, data):
-         # Twitter returns data in JSON format - we need to decode it first
-        if(data.startswith( '{"created_at":' )):
+        # Twitter returns data in JSON format - we need to decode it first
+        if (data.startswith('{"created_at":')):
             decoded = json.loads(data)
             tweet = str((decoded['user']['screen_name'], decoded['text']))
-            #TweetFile.write(tweet)
+            # TweetFile.write(tweet)
             #TweetFile.write("\n")
             Sentiment(tweet)
         else:
@@ -111,9 +115,12 @@ class listener(StreamListener):
         print status
 
 
+<<<<<<< HEAD
 # We load in the list of words and their log probabilities
 happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
 
+=======
+>>>>>>> d098b5d... ready for moods
 twitterStream = Stream(auth, listener())
 twitterStream.sample(languages=["en"]);
 #twitterStream.filter(languages=["en"])

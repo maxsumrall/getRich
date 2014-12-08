@@ -1,6 +1,0 @@
-the tweet is sad: 0.245998299501 tweet: (u'ViniciusCurtiih', u'to com fome ..')
-the tweet is sad: 0.191853700633 tweet: (u'SmadaTteltrab', u'@EmmaLou__ You ruined it now')
-the tweet is sad: 0.482160076169 tweet: (u'SarahAMbuehl', u'I feel like a sim')
-the tweet is sad: 0.478777757992 tweet: (u'_blvir', u'RT @VividDrugs: I wish I could have you.')
-the tweet is sad: 0.306940911919 tweet: (u'JASSPERYEE', u'@Kiatgee pain is temporary, GPA is forever')
-the tweet is sad: 0.433690402368 tweet: (u'kissedbykook', u'
