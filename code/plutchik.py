@@ -24,7 +24,7 @@ def executeRegex(emotion, tweet):
     regex_tmp = '|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines())
     regex_string = '(\W|^)('+regex_tmp+')(\W|$)'
     # print regex_string
-    regex = re.compile(regex_string)
+    regex = re.compile(regex_string, re.IGNORECASE)
 
     # execute the regex on the tweet
     print emotion + ": " + str(len(regex.findall(tweet)))
