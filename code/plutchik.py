@@ -20,24 +20,6 @@ class Emotion:
         inner_regex = ('|'.join(open('plutchik/'+self.name+'.txt', 'r').read().splitlines()))
         self.regex = '(' + inner_regex + ')'
 
-    def getOppositeEmotion(self):
-        if self.name is 'joy':
-            return "sadness"
-        elif self.name is 'trust':
-            return 'disgust'
-        elif self.name is 'fear':
-            return 'anger'
-        elif self.name is 'surprise':
-            return 'anticipation'
-        elif self.name is 'sadness':
-            return 'joy'
-        elif self.name is 'disgust':
-            return 'trust'
-        elif self.name is 'anger':
-            return 'fear'
-        elif self.name is 'anticipation':
-            return 'surprise'
-
 
 # list with the emotions
 # walking clockwise around the wheel, starting at the top
@@ -55,6 +37,7 @@ emotions = [
 negations = ("n't", "0", "aint", "arent", "cant", "couldnt", "darent", "didnt", "doesnt", "dont", "hadnt", "hasnt", "havent",
              "isnt", "mightnt", "mustnt", "neednt", "never", "no", "not", "oughtnt", "shant", "shouldnt", "w/o", "wasnt",
              "werent", "without", "wont", "wouldnt", "zero")
+negationRegex = '(' + ('|'.join(negations)) + ')\W'
 
 def executeTweet(tweet):
     # prepare tweet
@@ -64,10 +47,26 @@ def executeTweet(tweet):
     res = [0 for x in range(len(emotions))]
 
     # get the number of hits per emotion for this tweet
+    # also get the number op negation hits
     for index, emotion in enumerate(emotions):
-        res[index] = executeRegex(emotion.regex, tweet)
+        val1 = executeRegex(emotion.regex, tweet)
+        val2 = executeRegex(negationRegex + emotion.regex, tweet)
 
-    print res
+        # print "Negations: " + str(val2)
+
+        # get the opposite emotion index
+        oppositeIndex = index + 4
+        if oppositeIndex > 7:
+            oppositeIndex -= 8
+
+        # if the difference is still positive, add it to the emotions value
+        if val1 - val2 > 0:
+            res[index] += val1 - val2
+
+        # add the opposite value to the opposite emotion
+        res[oppositeIndex] += val2
+
+    # print res
     return res
 
 def executeRegex(regex_string, tweet):
@@ -82,4 +81,4 @@ def executeRegex(regex_string, tweet):
     return len(result)
 
 # testing stuff
-executeTweet("tolera wear his heart on his sleeves")
+# executeTweet("tolera wear his heart on his sleeves but hadnt fear")
