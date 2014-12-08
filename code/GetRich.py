@@ -11,9 +11,9 @@ csecret = 'm29wgjcnLCcOTgQ5vQxjLK4i8bbSfls0qvaxj3iHQNvlelpNVl'
 atoken = '2891995534-E78xGPCQnR34msGEIAujG1XlpsxRqxTzZcAeKhv'
 asecret = 'icZjZQwjJEjgTEQJ2rlCy57cgY57a9Hb3EYBdjfB8CWDF'
 
-TweetFileHappy = codecs.open("TweetsHappy.txt", "w", "utf-8")
-TweetFileNeutral = codecs.open("TweetsNeutral.txt", "w", "utf-8")
-TweetFileSad = codecs.open("TweetsSad.txt", "w", "utf-8")
+#TweetFileHappy = codecs.open("TweetsHappy.txt", "w", "utf-8")
+#TweetFileNeutral = codecs.open("TweetsNeutral.txt", "w", "utf-8")
+#TweetFileSad = codecs.open("TweetsSad.txt", "w", "utf-8")
 
 
 auth = OAuthHandler(ckey, csecret)
