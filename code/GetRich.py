@@ -48,12 +48,9 @@ def classifySentiment(words, happy_log_probs, sad_log_probs):
     return prob_happy, prob_sad
 
 def Sentiment(data):
-<<<<<<< HEAD:HappyPlace/GetRich.py
-=======
     # We load in the list of words and their log probabilities
     #Moved to initStuff()
     #happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
->>>>>>> adb299522acac3bfb066c2e6433fbb86f7d09899:code/GetRich.py
 
     tweet = data.split()
     # Here we have tweets which we have already tokenized (turned into an array of words)
