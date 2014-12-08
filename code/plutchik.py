@@ -40,6 +40,7 @@ class Emotion:
 
 
 # list with the emotions
+# walking clockwise around the wheel, starting at the top
 emotions = [
     Emotion("joy"),
     Emotion("trust"),
@@ -52,12 +53,16 @@ emotions = [
     ]
 
 def executeTweet(tweet):
-    # init
+    # prepare tweet
+    tweet = tweet.replace("~",  "").replace("#", "").replace("_", "").replace("?",  "").replace("\"", "").replace("\'", "").replace("*",  "")
+
+    # init result list
     res = [0 for x in range(len(emotions))]
 
+    # get the number of hits per emotion for this tweet
     for index, emotion in enumerate(emotions):
-        # execute the regex on the tweet for each emotion
         res[index] = executeRegex(emotion.regex, tweet)
+
     print res
     return res
 
