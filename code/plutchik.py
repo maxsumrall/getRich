@@ -15,7 +15,7 @@ def executeRegex(emotion, tweet):
     match = regex.search(tweet)
     regex.match(tweet)
     if match:
-        print match.groups()
+        print emotion + ": " + str(len(match.groups()))
     return
 
 tweet = 'I am not as good as I thought. At least, I am in love and get laid everyday'
