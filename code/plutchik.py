@@ -6,20 +6,24 @@ emotions = ("anger", "anticipation", "disgust", "fear", "joy", "sadness", "surpr
 
 regexes = []
 for emotion in emotions:
-    regexes.append((emotion,('|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines()))))
+    # create regexes with their emotions
+    inner_regex = ('|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines()))
+    regex_tmp = '(\W|^)(' + inner_regex + ')(\W|$)'
+    regexes.append((emotion, regex_tmp))
 
 def executeTweet(tweet):
     res = []
     for regex in regexes:
-     res.append(executeRegex(regex[1],tweet))
+        # execute the regex on the tweet for each emotion
+        res.append(executeRegex(regex[1], tweet))
     return res
 
-def executeRegex(emotionRegex, tweet):
-    # get the regex from the emotion
-    regex_tmp = emotionRegex
-    regex_string = '(\W|^)('+regex_tmp+')(\W|$)'
-    # print regex_string
+def executeRegex(regex_string, tweet):
+    # compile the regex with the flag IGNORECASE
     regex = re.compile(regex_string, re.IGNORECASE)
 
     # execute the regex on the tweet
-    return len(regex.findall(tweet))
+    result = regex.findall(tweet)
+
+    # return length of the results array, this should be the number of occurrences of emotion terms
+    return len(result)
