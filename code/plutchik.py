@@ -22,4 +22,4 @@ def executeRegex(emotionRegex, tweet):
     regex = re.compile(regex_string, re.IGNORECASE)
 
     # execute the regex on the tweet
-    return str(len(regex.findall(tweet)))
+    return len(regex.findall(tweet))
