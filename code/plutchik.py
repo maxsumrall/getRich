@@ -66,6 +66,16 @@ def executeTweet(tweet):
         # add the opposite value to the opposite emotion
         res[oppositeIndex] += val2
 
+    # normalize the values
+    # get the total of hits
+    total = 0.0
+    for result in res:
+        total += result
+
+    # divide each count with the total
+    if total:
+        res[:] = [result / total for result in res]
+
     # print res
     return res
 
