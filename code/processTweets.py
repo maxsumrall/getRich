@@ -40,7 +40,7 @@ def calculateMoodsSentiment():
     currDay = 0
     countToday = 1.0
     days = {}
-    for tweet in tweets.find():
+    for tweet in tweets.find()[:10000]:
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
             date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
@@ -61,7 +61,39 @@ def calculateMoodsSentiment():
               + "," + str(sentiments[3] / count) \
               + "," + str(sentiments[4] / count) \
               + "," + str(sentiments[5] / count) \
-              + "," + str(sentiments[6] / count)
+              + "," + str(sentiments[6] / count) \
+              + "," + str(sentiments[7] / count)
+
+    #normalize
+    avg = []
+    for key in days.keys():
+        sentiments, count = days[key]
+        avg.append((key, ((sentiments[0] / count), (sentiments[1] / count), (sentiments[2] / count), (sentiments[3] / count), (sentiments[4] / count), (sentiments[5] / count), (sentiments[6] / count), (sentiments[7] / count))))
+    max = 0
+    min = 10000
+    for day in avg:
+        for emotion in day[1]:
+            if emotion > max:
+                max = emotion
+            if emotion < min:
+                min = emotion
+    #min and max calculated
+    for i in range(len(avg)):
+        for j in range(len(avg[i][1])):
+            avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
+    print "day,anger,anticipation,disgust,fear,joy,sadness,surprise,trust"
+    for day in avg:
+        print day[0] \
+              + "," + str(day[1][0]) \
+              + "," + str(day[1][1]) \
+              + "," + str(day[1][2]) \
+              + "," + str(day[1][3]) \
+              + "," + str(day[1][4]) \
+              + "," + str(day[1][5]) \
+              + "," + str(day[1][6]) \
+              + "," + str(day[1][7])
+
+
 
 def countEmotWords():
     count = 0
