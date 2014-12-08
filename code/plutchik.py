@@ -9,11 +9,13 @@ def getPlutchik(tweet):
 
 def executeRegex(emotion, tweet):
     # get the regex from the emotion
-    regex = ''.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines())
+    regex = re.compile('|'.join(open('plutchik/'+emotion+'.txt', 'r').read().splitlines()))
 
     # execute the regex on the tweet
-    match = re.match(regex, tweet)
-    print match
+    match = regex.search(tweet)
+    regex.match(tweet)
+    if match:
+        print match.groups()
     return
 
 tweet = 'I am not as good as I thought. At least, I am in love and get laid everyday'
