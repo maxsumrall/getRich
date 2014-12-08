@@ -15,6 +15,7 @@ TweetFileHappy = codecs.open("TweetsHappy.txt", "w", "utf-8")
 TweetFileNeutral = codecs.open("TweetsNeutral.txt", "w", "utf-8")
 TweetFileSad = codecs.open("TweetsSad.txt", "w", "utf-8")
 
+
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
@@ -47,8 +48,6 @@ def classifySentiment(words, happy_log_probs, sad_log_probs):
     return prob_happy, prob_sad
 
 def Sentiment(data):
-    # We load in the list of words and their log probabilities
-    happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
 
     tweet = data.split()
     # Here we have tweets which we have already tokenized (turned into an array of words)
@@ -102,6 +101,10 @@ class listener(StreamListener):
 
     def on_error(self, status):
         print status
+
+
+# We load in the list of words and their log probabilities
+happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
 
 twitterStream = Stream(auth, listener())
 twitterStream.sample(languages=["en"]);
