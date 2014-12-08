@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo
+import os, json, subprocess, pymongo, Sentiment
 from datetime import *
 
 client = pymongo.MongoClient()
@@ -28,11 +28,11 @@ def calculateAverageSentiment():
 				sumToday, countToday = days[key]
 			else:
 				sumToday, countToday = (0.0, 0.0)
-			sumToday += sentiment(tweet["text"])
+			sumToday += Sentiment.Sentiment(tweet["text"])
 			countToday += 1.0
 			days[key] = (sumToday, countToday)
 	for key in days.keys():
-		print key + ": " + str(days[key][0]/days[key][1])
+		print key + ", " + str(days[key][0]/days[key][1])
 			
 
 
@@ -46,7 +46,7 @@ def sentiment(tweet):
 
 def countEmotWords():
 	count = 0
-	for tweet in tweets.find(): #holy shit thats a lot of tweets.
+	for tweet in tweets.find():
 		if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
 			count += 1
 	print count

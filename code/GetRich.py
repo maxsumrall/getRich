@@ -48,6 +48,12 @@ def classifySentiment(words, happy_log_probs, sad_log_probs):
     return prob_happy, prob_sad
 
 def Sentiment(data):
+<<<<<<< HEAD:HappyPlace/GetRich.py
+=======
+    # We load in the list of words and their log probabilities
+    #Moved to initStuff()
+    #happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
+>>>>>>> adb299522acac3bfb066c2e6433fbb86f7d09899:code/GetRich.py
 
     tweet = data.split()
     # Here we have tweets which we have already tokenized (turned into an array of words)
@@ -55,7 +61,8 @@ def Sentiment(data):
     # Calculate the probabilities that the tweets are happy or sad
     tweet_happy_prob, tweet_sad_prob = classifySentiment(tweet, happy_log_probs, sad_log_probs)
 
-    if( tweet_happy_prob >= 0.5 and tweet_happy_prob < 0.7):
+    """
+    if 0.5 <= tweet_happy_prob < 0.7:
         output = "the tweet is neutral: ", tweet_happy_prob, " tweet: ", data
         TweetFileNeutral.write("the tweet is neutral: ")
         TweetFileNeutral.write(str(tweet_happy_prob))
@@ -64,7 +71,7 @@ def Sentiment(data):
         TweetFileNeutral.write("\n")
         print output
 
-    if( tweet_happy_prob >= 0.7 ):
+    if tweet_happy_prob >= 0.7:
         output = "the tweet is happy: ", tweet_happy_prob, " tweet: ", data
         TweetFileHappy.write("the tweet is happy: ")
         TweetFileHappy.write(str(tweet_happy_prob))
@@ -73,7 +80,7 @@ def Sentiment(data):
         TweetFileHappy.write("\n")
         print output
 
-    if( tweet_happy_prob < 0.5 ):
+    if tweet_happy_prob < 0.5:
         output = "the tweet is sad: ", tweet_sad_prob, " tweet: ", data
         TweetFileSad.write("the tweet is sad: ")
         TweetFileSad.write(str(tweet_happy_prob))
@@ -81,9 +88,13 @@ def Sentiment(data):
         TweetFileSad.write(data)
         TweetFileSad.write("\n")
         print output
-
+    """
+    return tweet_happy_prob - tweet_sad_prob
 
     #print "The probability that tweet1 (", tweet, ") is happy is ", tweet_happy_prob, "and the probability that it is sad is ", tweet_sad_prob
+    #Load words for sentiment analysis
+
+happy_log_probs, sad_log_probs = readSentimentList('twitter_sentiment_list.csv')
 
 class listener(StreamListener):
 
