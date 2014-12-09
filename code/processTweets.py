@@ -44,7 +44,7 @@ def calculateAverageSentiment():
 def calculateMoodsSentiment():
     global tweetNumber
     days = {}
-    for tweet in tweets.find()[:10000]:
+    for tweet in tweets.find():
         tweetNumber += 1
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
             date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
@@ -58,7 +58,7 @@ def calculateMoodsSentiment():
                 days[key] = [tweetMoods, 1.0]
 
     outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
-    line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation \n"
+    line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
     print line
     outfile.writelines(line + "\n")
     for key in days.keys():
