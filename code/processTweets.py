@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time
-from datetime import *
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime
+
 
 client = pymongo.MongoClient()
 db = client.test_database
