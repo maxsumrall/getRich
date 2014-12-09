@@ -56,7 +56,7 @@ def calculateMoodsSentiment():
             else:
                 days[key] = [tweetMoods, 1.0]
 
-    outfile = open("output_results" + time.time().replace(".","_") + ".csv","w")
+    outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
     line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
     print line
     outfile.writelines(line)
