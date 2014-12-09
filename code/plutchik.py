@@ -88,8 +88,8 @@ def executeRegex(regex, tweet):
     result = regex.findall(tweet)
 
     # return length of the results array, this should be the number of occurrences of emotion terms
-    print result
+    # print result
     return len(result)
 
 # testing stuff
-executeTweet("tolera wear his heart on his sleeves but fear fear")
+# executeTweet("tolera wear his heart on his sleeves but fear fear")
