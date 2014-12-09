@@ -6,11 +6,15 @@ import re
 # 1. get regular expressions from the files
 # 2. match regex on the tweet
 # 3. normalize the results
-regexes = {}
-class Emotion:
-    name = ""
-    regex = ""
 
+
+negations = ("n't", "0", "aint", "arent", "cant", "couldnt", "darent", "didnt", "doesnt", "dont", "hadnt", "hasnt", "havent",
+             "isnt", "mightnt", "mustnt", "neednt", "never", "no", "not", "oughtnt", "shant", "shouldnt", "w/o", "wasnt",
+             "werent", "without", "wont", "wouldnt", "zero")
+negationRegex_string = '(' + ('|'.join(negations)) + ')\W'
+
+
+class Emotion:
     def __init__(self, name):
         self.name = name
         self.getRegex()
@@ -18,7 +22,9 @@ class Emotion:
     def getRegex(self):
         # load and create regexes
         inner_regex = ('|'.join(open('plutchik/'+self.name+'.txt', 'r').read().splitlines()))
-        self.regex = '(' + inner_regex + ')'
+        regex_string = '(' + inner_regex + ')'
+        self.regex = re.compile(regex_string, re.IGNORECASE)
+        self.negationRegex = re.compile(negationRegex_string + regex_string, re.IGNORECASE)
 
 
 # list with the emotions
@@ -34,10 +40,6 @@ emotions = [
     Emotion("anticipation")
     ]
 
-negations = ("n't", "0", "aint", "arent", "cant", "couldnt", "darent", "didnt", "doesnt", "dont", "hadnt", "hasnt", "havent",
-             "isnt", "mightnt", "mustnt", "neednt", "never", "no", "not", "oughtnt", "shant", "shouldnt", "w/o", "wasnt",
-             "werent", "without", "wont", "wouldnt", "zero")
-negationRegex = '(' + ('|'.join(negations)) + ')\W'
 
 def executeTweet(tweet):
     # prepare tweet
@@ -50,7 +52,7 @@ def executeTweet(tweet):
     # also get the number op negation hits
     for index, emotion in enumerate(emotions):
         val1 = executeRegex(emotion.regex, tweet)
-        val2 = executeRegex(negationRegex + emotion.regex, tweet)
+        val2 = executeRegex(emotion.negationRegex, tweet)
 
         # print "Negations: " + str(val2)
 
@@ -79,15 +81,8 @@ def executeTweet(tweet):
     # print res
     return res
 
-def executeRegex(regex_string, tweet):
-    # compile the regex with the flag IGNORECASE
 
-    if hash(regex_string) in regexes.keys():
-        regex = regexes[hash(regex_string)]
-    else:
-        regex = re.compile(regex_string, re.IGNORECASE)
-        regexes[hash(regex_string)] = regex
-
+def executeRegex(regex, tweet):
     # execute the regex on the tweet
     result = regex.findall(tweet)
 
@@ -96,4 +91,4 @@ def executeRegex(regex_string, tweet):
     return len(result)
 
 # testing stuff
-# executeTweet("tolera wear his heart on his sleeves but hadnt fear")
+# executeTweet("tolera wear his heart on his sleeves but fear fear")
