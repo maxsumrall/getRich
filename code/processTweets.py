@@ -46,16 +46,16 @@ def calculateMoodsSentiment():
     days = {}
     for tweet in tweets.find():
         tweetNumber += 1
-        if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-            date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
-            key = str(date.month) + "/" + str(date.day)
-            tweetMoods = plutchik.executeTweet(tweet["text"])
-            if key in days.keys():
-                days[key][1] += 1
-                for i in range(len(tweetMoods)):
-                    days[key][0][i] += tweetMoods[i]
-            else:
-                days[key] = [tweetMoods, 1.0]
+        # if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
+        date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+        key = str(date.month) + "/" + str(date.day)
+        tweetMoods = plutchik.executeTweet(tweet["text"])
+        if key in days.keys():
+            days[key][1] += 1
+            for i in range(len(tweetMoods)):
+                days[key][0][i] += tweetMoods[i]
+        else:
+            days[key] = [tweetMoods, 1.0]
 
     outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
     line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
