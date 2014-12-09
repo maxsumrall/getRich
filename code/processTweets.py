@@ -46,12 +46,13 @@ def calculateMoodsSentiment():
             key = str(date.month) + "/" + str(date.day)
             tweetMoods = plutchik.executeTweet(tweet["text"])
             if key in days.keys():
+                days[key][1] += 1
                 for i in range(len(tweetMoods)):
                     days[key][0][i] += tweetMoods[i]
             else:
                 days[key] = [tweetMoods, 1.0]
 
-    print "day,anger,anticipation,disgust,fear,joy,sadness,surprise,trust"
+    print "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
     for key in days.keys():
         sentiments, count = days[key]
         print key \
@@ -81,7 +82,7 @@ def calculateMoodsSentiment():
     for i in range(len(avg)):
         for j in range(len(avg[i][1])):
             avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
-    print "day,anger,anticipation,disgust,fear,joy,sadness,surprise,trust"
+    print "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
     for day in avg:
         print day[0] \
               + "," + str(day[1][0]) \
