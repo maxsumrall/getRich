@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time
 from datetime import *
 
 client = pymongo.MongoClient()
@@ -10,7 +10,7 @@ tweets = db.tweets
 emotional_words_filter = ["i feel", "i am feeling",
                           "i'm feeling", "im feeling",
                           "i don't feel",
-                          "i dont feel", "i'm",
+                          "i dont feel",
                           "im", "i am",
                           "makes me"]
 emotional_words_filter_set = set(emotional_words_filter)
@@ -18,7 +18,7 @@ tweetNumber = 0
 
 def printit():
     threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%f%%" % (tweetNumber/float(tweets.count()))*100)
+    sys.stdout.write("\r%d%%" % (tweetNumber/float(tweets.count()))*100)
 
 def calculateAverageSentiment():
     currDay = 0
@@ -43,7 +43,7 @@ def calculateAverageSentiment():
 def calculateMoodsSentiment():
     global tweetNumber
     days = {}
-    for tweet in tweets.find():
+    for tweet in tweets.find()[:10000]:
         tweetNumber += 1
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
             date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
@@ -56,10 +56,13 @@ def calculateMoodsSentiment():
             else:
                 days[key] = [tweetMoods, 1.0]
 
-    print "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+    outfile = open("output_results" + time.time().replace(".","_") + ".csv","w")
+    line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+    print line
+    outfile.writelines(line)
     for key in days.keys():
         sentiments, count = days[key]
-        print key \
+        line = key \
               + "," + str(sentiments[0] / count) \
               + "," + str(sentiments[1] / count) \
               + "," + str(sentiments[2] / count) \
@@ -68,7 +71,8 @@ def calculateMoodsSentiment():
               + "," + str(sentiments[5] / count) \
               + "," + str(sentiments[6] / count) \
               + "," + str(sentiments[7] / count)
-
+        print line
+        outfile.writelines(line)
     #normalize
     avg = []
     for key in days.keys():
@@ -86,9 +90,10 @@ def calculateMoodsSentiment():
     for i in range(len(avg)):
         for j in range(len(avg[i][1])):
             avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
-    print "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+    line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+    outfile.writelines(line)
     for day in avg:
-        print day[0] \
+        line = day[0] \
               + "," + str(day[1][0]) \
               + "," + str(day[1][1]) \
               + "," + str(day[1][2]) \
@@ -97,7 +102,9 @@ def calculateMoodsSentiment():
               + "," + str(day[1][5]) \
               + "," + str(day[1][6]) \
               + "," + str(day[1][7])
-
+        print line
+        outfile.writelines(line)
+    outfile.close()
 
 
 def countEmotWords():
