@@ -3,9 +3,7 @@ __author__ = 'Grabot'
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
-import numpy as np
 import json
-import re
 import plutchik
 
 ckey = 'Ac2Trdc9xU6pTz4v0SdGRURKH'
@@ -23,7 +21,7 @@ class listener(StreamListener):
         if (data.startswith('{"created_at":')):
             decoded = json.loads(data)
             tweet = str((decoded['user']['screen_name'], decoded['text']))
-            plutchik.executeTweet(tweet)
+            print plutchik.executeTweet(tweet)
 
         return True
 
