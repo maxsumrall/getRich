@@ -7,13 +7,13 @@ client = pymongo.MongoClient()
 db = client.test_database
 tweets = db.tweets
 
-emotional_words_filter = ["i feel", "i am feeling",
-                          "i'm feeling", "im feeling",
-                          "i don't feel",
-                          "i dont feel",
-                          "im", "i am",
-                          "makes me"]
-emotional_words_filter_set = set(emotional_words_filter)
+# emotional_words_filter = ["i feel", "i am feeling",
+#                           "i'm feeling", "im feeling",
+#                           "i don't feel",
+#                           "i dont feel",
+#                           "im", "i am",
+#                           "makes me"]
+# emotional_words_filter_set = set(emotional_words_filter)
 tweetNumber = 0
 finish = False
 
@@ -78,7 +78,8 @@ def calculateMoodsSentiment():
               + "," + str(sentiments[7] / count)
         print line
         outfile.writelines(line + "\n")
-    #normalize
+
+    # normalize: (Xi - min(X)) / (max(X) - min(X))
     avg = []
     for key in days.keys():
         sentiments, count = days[key]
