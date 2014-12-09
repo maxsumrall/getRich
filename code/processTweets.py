@@ -65,7 +65,7 @@ def calculateMoodsSentiment():
               + "," + str(sentiments[7] / count)
 
     #normalize
-    """avg = []
+    avg = []
     for key in days.keys():
         sentiments, count = days[key]
         avg.append((key, [(sentiments[0] / count), (sentiments[1] / count), (sentiments[2] / count), (sentiments[3] / count), (sentiments[4] / count), (sentiments[5] / count), (sentiments[6] / count), (sentiments[7] / count)]))
@@ -81,7 +81,7 @@ def calculateMoodsSentiment():
     for i in range(len(avg)):
         for j in range(len(avg[i][1])):
             avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
-    print "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+    print "day,anger,anticipation,disgust,fear,joy,sadness,surprise,trust"
     for day in avg:
         print day[0] \
               + "," + str(day[1][0]) \
@@ -93,7 +93,7 @@ def calculateMoodsSentiment():
               + "," + str(day[1][6]) \
               + "," + str(day[1][7])
 
-    """
+
 
 def countEmotWords():
     count = 0
