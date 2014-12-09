@@ -3,9 +3,9 @@
 import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime
 
 
-# client = pymongo.MongoClient()
-# db = client.test_database
-# tweets = db.tweets
+client = pymongo.MongoClient()
+db = client.test_database
+tweets = db.tweets
 
 emotional_words_filter = ["i feel", "i am feeling",
                           "i'm feeling", "im feeling",
