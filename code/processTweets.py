@@ -41,8 +41,7 @@ def calculateAverageSentiment():
 
 
 def calculateMoodsSentiment():
-    currDay = 0
-    countToday = 1.0
+    global tweetNumber
     days = {}
     for tweet in tweets.find():
         tweetNumber += 1
