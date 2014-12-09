@@ -82,7 +82,6 @@ def executeTweet(tweet):
 def executeRegex(regex_string, tweet):
     # compile the regex with the flag IGNORECASE
 
-    regex =
     if hash(regex_string) in regexes.keys():
         regex = regexes[hash(regex_string)]
     else:
