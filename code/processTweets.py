@@ -84,8 +84,8 @@ def calculateMoodsSentiment():
     for key in days.keys():
         sentiments, count = days[key]
         avg.append((key, [(sentiments[0] / count), (sentiments[1] / count), (sentiments[2] / count), (sentiments[3] / count), (sentiments[4] / count), (sentiments[5] / count), (sentiments[6] / count), (sentiments[7] / count)]))
-    max = 0
-    min = 10000
+    max = 0.0
+    min = 10000.0
     for day in avg:
         for emotion in day[1]:
             if emotion > max:
