@@ -3,9 +3,10 @@ __author__ = 'giedomak'
 import re
 
 # workflow:
-# 1. get regular expressions from the files
-# 2. match regex on the tweet
-# 3. normalize the results
+# 1. get regular expressions from the emotion files
+# 2. compile this regex and the opposite regex
+# 3. match regex on the tweet
+# 4. normalize the results
 
 
 negations = ("n't", "0", "aint", "arent", "cant", "couldnt", "darent", "didnt", "doesnt", "dont", "hadnt", "hasnt", "havent",
