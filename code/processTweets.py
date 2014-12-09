@@ -18,7 +18,7 @@ tweetNumber = 0
 
 def printit():
     threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%d tweets done" % tweetNumber)
+    sys.stdout.write("\r%d%%" % (tweetNumber/float(tweets.count()))*100)
 
 def calculateAverageSentiment():
     currDay = 0
