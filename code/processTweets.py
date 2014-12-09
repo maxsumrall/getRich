@@ -20,6 +20,7 @@ def printit():
     threading.Timer(5.0, printit).start()
     sys.stdout.write("\r%d%%" % (tweetNumber/float(tweets.count()))*100)
 
+
 def calculateAverageSentiment():
     currDay = 0
     sumToday = 0.0
@@ -57,9 +58,9 @@ def calculateMoodsSentiment():
                 days[key] = [tweetMoods, 1.0]
 
     outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
-    line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+    line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation \n"
     print line
-    outfile.writelines(line)
+    outfile.writelines(line + "\n")
     for key in days.keys():
         sentiments, count = days[key]
         line = key \
@@ -72,7 +73,7 @@ def calculateMoodsSentiment():
               + "," + str(sentiments[6] / count) \
               + "," + str(sentiments[7] / count)
         print line
-        outfile.writelines(line)
+        outfile.writelines(line + "\n")
     #normalize
     avg = []
     for key in days.keys():
@@ -91,7 +92,7 @@ def calculateMoodsSentiment():
         for j in range(len(avg[i][1])):
             avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
     line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
-    outfile.writelines(line)
+    outfile.writelines(line + "\n")
     for day in avg:
         line = day[0] \
               + "," + str(day[1][0]) \
@@ -103,7 +104,7 @@ def calculateMoodsSentiment():
               + "," + str(day[1][6]) \
               + "," + str(day[1][7])
         print line
-        outfile.writelines(line)
+        outfile.writelines(line + "\n")
     outfile.close()
 
 
