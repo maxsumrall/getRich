@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading
 from datetime import *
 
 client = pymongo.MongoClient()
@@ -14,7 +14,11 @@ emotional_words_filter = ["i feel", "i am feeling",
                           "im", "i am",
                           "makes me"]
 emotional_words_filter_set = set(emotional_words_filter)
+tweetNumber = 0
 
+def printit():
+    threading.Timer(5.0, printit).start()
+    sys.stdout.write("\r%d tweets done" % tweetNumber)
 
 def calculateAverageSentiment():
     currDay = 0
@@ -40,7 +44,8 @@ def calculateMoodsSentiment():
     currDay = 0
     countToday = 1.0
     days = {}
-    for tweet in tweets.find()[:1000]:
+    for tweet in tweets.find():
+        tweetNumber += 1
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
             date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
