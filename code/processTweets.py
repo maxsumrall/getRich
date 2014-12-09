@@ -112,12 +112,12 @@ def calculateMoodsSentiment():
     outfile.close()
 
 
-def countEmotWords():
-    count = 0
-    for tweet in tweets.find():
-        if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-            count += 1
-    print count
+# def countEmotWords():
+#     count = 0
+#     for tweet in tweets.find():
+#         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
+#             count += 1
+#     print count
 
 printit()
 calculateMoodsSentiment()
