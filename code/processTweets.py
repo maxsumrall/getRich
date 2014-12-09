@@ -27,7 +27,7 @@ def calculateAverageSentiment():
     days = {}
     for tweet in tweets.find():
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-            date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+            date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
             if key in days.keys():
                 sumToday, countToday = days[key]
@@ -46,7 +46,7 @@ def calculateMoodsSentiment():
     for tweet in tweets.find()[:10000]:
         tweetNumber += 1
         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-            date = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+            date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
             tweetMoods = plutchik.executeTweet(tweet["text"])
             if key in days.keys():
