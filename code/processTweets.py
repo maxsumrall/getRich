@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys
 from datetime import *
 
 client = pymongo.MongoClient()
@@ -18,7 +18,7 @@ tweetNumber = 0
 
 def printit():
     threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%d%%" % (tweetNumber/float(tweets.count()))*100)
+    sys.stdout.write("\r%f%%" % (tweetNumber/float(tweets.count()))*100)
 
 def calculateAverageSentiment():
     currDay = 0
@@ -107,5 +107,5 @@ def countEmotWords():
             count += 1
     print count
 
-
+printit()
 calculateMoodsSentiment()
