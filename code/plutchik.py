@@ -47,7 +47,7 @@ def executeTweet(tweet):
     tweet = tweet.replace("~",  "").replace("#", "").replace("_", "").replace("?",  "").replace("\"", "").replace("\'", "").replace("*",  "")
 
     # init result list
-    res = [0 for x in range(len(emotions))]
+    res = [0.0 for x in range(len(emotions))]
 
     # get the number of hits per emotion for this tweet
     # also get the number op negation hits
