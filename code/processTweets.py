@@ -18,12 +18,14 @@ tweetNumber = 0
 finish = False
 
 days = {}
+# total = tweets.count()
+total = 50000
 
 
 def printit():
     if not finish:
         threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%f%%" % (tweetNumber/float(tweets.count()))*100)
+    sys.stdout.write("\r%f%%" % (tweetNumber/float(total))*100)
 
 
 # def calculateAverageSentiment():
@@ -53,12 +55,13 @@ def calculateMoodsSentiment():
         global tweetNumber
         global days
         # print "Number of tweets: " + str(tweets.count())
-        for tweet in tweets.find():
+        for tweet in tweets.find()[:total]:
             # for printing progress
             tweetNumber += 1
 
             # only process tweets that don't have http:// in there
-            if len(http_regex.findall(tweet["text"])) is 0:
+            # if len(http_regex.findall(tweet["text"])) is 0:
+            if tweet["text"].find("http://") is -1:
 
                 date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
                 key = str(date.month) + "/" + str(date.day)
