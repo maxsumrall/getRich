@@ -12,7 +12,7 @@ import re
 negations = ("n't", "0", "aint", "arent", "cant", "couldnt", "darent", "didnt", "doesnt", "dont", "hadnt", "hasnt", "havent",
              "isnt", "mightnt", "mustnt", "neednt", "never", "no", "not", "oughtnt", "shant", "shouldnt", "w/o", "wasnt",
              "werent", "without", "wont", "wouldnt", "zero")
-negationRegex_string = '(' + ('|'.join(negations)) + ')\W'
+negationPatern = '(' + ('|'.join(negations)) + ')\W'
 
 
 class Emotion:
@@ -22,10 +22,10 @@ class Emotion:
 
     def getRegex(self):
         # load and create regexes
-        inner_regex = ('|'.join(open('plutchik/'+self.name+'.txt', 'r').read().splitlines()))
-        regex_string = '(' + inner_regex + ')'
-        self.regex = re.compile(regex_string, re.IGNORECASE)
-        self.negationRegex = re.compile(negationRegex_string + regex_string, re.IGNORECASE)
+        inner_patern = ('|'.join(open('plutchik/'+self.name+'.txt', 'r').read().splitlines()))
+        pattern = '(' + inner_patern + ')'
+        self.regex = re.compile(pattern, re.IGNORECASE)
+        self.negationRegex = re.compile(negationPatern + inner_patern, re.IGNORECASE)
 
 
 # list with the emotions
@@ -47,7 +47,7 @@ def executeTweet(tweet):
     tweet = tweet.replace("~",  "").replace("#", "").replace("_", "").replace("?",  "").replace("\"", "").replace("\'", "").replace("*",  "")
 
     # init result list
-    res = [0 for x in range(len(emotions))]
+    res = [0.0 for x in range(len(emotions))]
 
     # get the number of hits per emotion for this tweet
     # also get the number op negation hits
