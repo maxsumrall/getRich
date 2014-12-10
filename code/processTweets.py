@@ -3,7 +3,7 @@
 import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys, time, datetime, re
 
 # command line parameters
-# use processTweets.py -m to use local mongodb
+# use processTweets.py -m to use localhost mongodb, else giedomak.nl mongodb will be used
 # use processTweets.py -n 1000 to process 1000 tweets, else all will be done
 if "-m" in sys.argv:
     print "local mongodb"
