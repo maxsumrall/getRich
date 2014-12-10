@@ -28,6 +28,7 @@ else:
 #                           "makes me"]
 # emotional_words_filter_set = set(emotional_words_filter)
 tweetNumber = 0
+tweetMatch = 0
 finish = False
 
 days = {}
@@ -37,7 +38,7 @@ print "Processing " + str(total) + " tweets"
 def printit():
     if not finish:
         threading.Timer(5.0, printit).start()
-        sys.stdout.write("\r%6.2f%%" % ((tweetNumber/float(total))*100))
+        sys.stdout.write("\r%6.2f%% Tweets filtered out: %6.2f%%" % ((tweetNumber/float(total)*100), ((1-(tweetMatch/float(tweetNumber+1)))*100)))
 
 
 # def calculateAverageSentiment():
@@ -64,6 +65,7 @@ http_regex = re.compile('(http://)', re.IGNORECASE)
 
 def calculateMoodsSentiment():
     try:
+        global tweetMatch
         global tweetNumber
         global days
         # print "Number of tweets: " + str(tweets.count())
@@ -74,6 +76,7 @@ def calculateMoodsSentiment():
             # only process tweets that don't have http:// in there
             # if len(http_regex.findall(tweet["text"])) is 0:
             if tweet["text"].find("http://") is -1:
+                tweetMatch += 1
 
                 date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
                 key = str(date.month) + "/" + str(date.day)
@@ -86,8 +89,7 @@ def calculateMoodsSentiment():
                     days[key] = [tweetMoods, 1.0]
 
             # else:
-                # http found
-                # print "http found: " + unicode(tweet["text"]).encode('utf-8')
+            #     print "http found: " + unicode(tweet["text"]).encode('utf-8')
 
         outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
         line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
