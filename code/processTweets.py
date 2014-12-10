@@ -2,14 +2,23 @@
 
 import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys, time, datetime, re
 
-if len(sys.argv) > 1:
+# command line parameters
+# use processTweets.py -m to use local mongodb
+# use processTweets.py -n 1000 to process 1000 tweets, else all will be done
+if "-m" in sys.argv:
     print "local mongodb"
     client = pymongo.MongoClient()
 else:
     print "giedomak.nl mongodb"
     client = pymongo.MongoClient('giedomak.nl')
+
 db = client.test_database
 tweets = db.tweets
+
+if "-n" in sys.argv:
+    total = int(sys.argv[sys.argv.index("-n")+1])
+else:
+    total = tweets.count()
 
 # emotional_words_filter = ["i feel", "i am feeling",
 #                           "i'm feeling", "im feeling",
@@ -22,8 +31,6 @@ tweetNumber = 0
 finish = False
 
 days = {}
-# total = tweets.count()
-total = 100
 print "Processing " + str(total) + " tweets"
 
 
