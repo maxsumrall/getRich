@@ -75,7 +75,9 @@ def calculateMoodsSentiment():
 
             # only process tweets that don't have http:// in there
             # if len(http_regex.findall(tweet["text"])) is 0:
-            if tweet["text"].find("http://") is -1:
+            # print tweet["text"][:2]
+            if tweet["text"].find("http://") is -1 and tweet["text"][:2] == "RT":
+                # print tweet["text"]
                 tweetMatch += 1
 
                 date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
@@ -142,6 +144,21 @@ def calculateMoodsSentiment():
                   + "," + str(day[1][7])
             print line
             outfile.writelines(line + "\n")
+
+        # for frontend
+        labels = []
+        for key in days.keys():
+            labels.append(key)
+
+        sentiment = [[] for x in range(8)]
+        for key in days.keys():
+            sentiments, count = days[key]
+            for i in range(len(sentiment)):
+                sentiment[i].append(sentiments[i]/count)
+
+        print labels
+        print sentiment
+
         outfile.close()
 
     except KeyboardInterrupt:
