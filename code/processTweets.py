@@ -2,8 +2,12 @@
 
 import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys, time, datetime, re
 
-
-client = pymongo.MongoClient('giedomak.nl')
+if len(sys.argv) > 1:
+    print "local mongodb"
+    client = pymongo.MongoClient()
+else:
+    print "giedomak.nl mongodb"
+    client = pymongo.MongoClient('giedomak.nl')
 db = client.test_database
 tweets = db.tweets
 
