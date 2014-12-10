@@ -24,6 +24,7 @@ finish = False
 days = {}
 # total = tweets.count()
 total = 50000
+print "Processing " + str(total) + " tweets"
 
 
 def printit():
