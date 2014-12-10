@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime, re
 
 
 client = pymongo.MongoClient('giedomak.nl')
@@ -44,23 +44,29 @@ def printit():
 #     for key in days.keys():
 #         print key + ", " + str(days[key][0] / days[key][1])
 
+http_regex = re.compile('(http://)', re.IGNORECASE)
+
 
 def calculateMoodsSentiment():
     global tweetNumber
     days = {}
     print "Number of tweets: " + tweets.count
     for tweet in tweets.find():
+        # for printing progress
         tweetNumber += 1
-        # if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-        date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
-        key = str(date.month) + "/" + str(date.day)
-        tweetMoods = plutchik.executeTweet(tweet["text"])
-        if key in days.keys():
-            days[key][1] += 1
-            for i in range(len(tweetMoods)):
-                days[key][0][i] += tweetMoods[i]
-        else:
-            days[key] = [tweetMoods, 1.0]
+
+        # only process tweets that don't have http:// in there
+        if http_regex.findall(tweet["text"]) is 0:
+
+            date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+            key = str(date.month) + "/" + str(date.day)
+            tweetMoods = plutchik.executeTweet(tweet["text"])
+            if key in days.keys():
+                days[key][1] += 1
+                for i in range(len(tweetMoods)):
+                    days[key][0][i] += tweetMoods[i]
+            else:
+                days[key] = [tweetMoods, 1.0]
 
     outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
     line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
@@ -93,7 +99,8 @@ def calculateMoodsSentiment():
                 max = emotion
             if emotion < min:
                 min = emotion
-    #min and max calculated
+
+    # min and max calculated
     for i in range(len(avg)):
         for j in range(len(avg[i][1])):
             avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
