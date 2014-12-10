@@ -93,37 +93,37 @@ def calculateMoodsSentiment():
             outfile.writelines(line + "\n")
 
         # normalize: (Xi - min(X)) / (max(X) - min(X))
-        avg = []
-        for key in days.keys():
-            sentiments, count = days[key]
-            avg.append((key, [(sentiments[0] / count), (sentiments[1] / count), (sentiments[2] / count), (sentiments[3] / count), (sentiments[4] / count), (sentiments[5] / count), (sentiments[6] / count), (sentiments[7] / count)]))
-        max = 0.0
-        min = 10000.0
-        for day in avg:
-            for emotion in day[1]:
-                if emotion > max:
-                    max = emotion
-                if emotion < min:
-                    min = emotion
-
-        # min and max calculated
-        for i in range(len(avg)):
-            for j in range(len(avg[i][1])):
-                avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
-        line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
-        outfile.writelines(line + "\n")
-        for day in avg:
-            line = day[0] \
-                  + "," + str(day[1][0]) \
-                  + "," + str(day[1][1]) \
-                  + "," + str(day[1][2]) \
-                  + "," + str(day[1][3]) \
-                  + "," + str(day[1][4]) \
-                  + "," + str(day[1][5]) \
-                  + "," + str(day[1][6]) \
-                  + "," + str(day[1][7])
-            print line
-            outfile.writelines(line + "\n")
+        # avg = []
+        # for key in days.keys():
+        #     sentiments, count = days[key]
+        #     avg.append((key, [(sentiments[0] / count), (sentiments[1] / count), (sentiments[2] / count), (sentiments[3] / count), (sentiments[4] / count), (sentiments[5] / count), (sentiments[6] / count), (sentiments[7] / count)]))
+        # max = 0.0
+        # min = 10000.0
+        # for day in avg:
+        #     for emotion in day[1]:
+        #         if emotion > max:
+        #             max = emotion
+        #         if emotion < min:
+        #             min = emotion
+        #
+        # # min and max calculated
+        # for i in range(len(avg)):
+        #     for j in range(len(avg[i][1])):
+        #         avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
+        # line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
+        # outfile.writelines(line + "\n")
+        # for day in avg:
+        #     line = day[0] \
+        #           + "," + str(day[1][0]) \
+        #           + "," + str(day[1][1]) \
+        #           + "," + str(day[1][2]) \
+        #           + "," + str(day[1][3]) \
+        #           + "," + str(day[1][4]) \
+        #           + "," + str(day[1][5]) \
+        #           + "," + str(day[1][6]) \
+        #           + "," + str(day[1][7])
+        #     print line
+        #     outfile.writelines(line + "\n")
         outfile.close()
 
     except KeyboardInterrupt:
