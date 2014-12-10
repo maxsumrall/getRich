@@ -23,14 +23,14 @@ finish = False
 
 days = {}
 # total = tweets.count()
-total = 50000
+total = 100
 print "Processing " + str(total) + " tweets"
 
 
 def printit():
     if not finish:
         threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%6.2f%%" % ((tweetNumber/float(total))*100))
+        sys.stdout.write("\r%6.2f%%" % ((tweetNumber/float(total))*100))
 
 
 # def calculateAverageSentiment():
@@ -84,7 +84,7 @@ def calculateMoodsSentiment():
 
         outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
         line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
-        print line
+        print "\n\n" + line
         outfile.writelines(line + "\n")
         for key in days.keys():
             sentiments, count = days[key]
@@ -120,6 +120,7 @@ def calculateMoodsSentiment():
                 avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
         line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
         outfile.writelines(line + "\n")
+        print
         for day in avg:
             line = day[0] \
                   + "," + str(day[1][0]) \
