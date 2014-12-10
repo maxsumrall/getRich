@@ -3,7 +3,7 @@
 import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime
 
 
-client = pymongo.MongoClient()
+client = pymongo.MongoClient('giedomak.nl')
 db = client.test_database
 tweets = db.tweets
 
@@ -22,7 +22,7 @@ def printit():
     print finish
     if not finish:
         threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%d%%" % (tweetNumber/float(tweets.count()))*100)
+    sys.stdout.write("\r%f%%" % (tweetNumber/float(tweets.count()))*100)
 
 
 # def calculateAverageSentiment():
@@ -48,6 +48,7 @@ def printit():
 def calculateMoodsSentiment():
     global tweetNumber
     days = {}
+    print "Number of tweets: " + tweets.count
     for tweet in tweets.find():
         tweetNumber += 1
         # if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
