@@ -50,13 +50,13 @@ http_regex = re.compile('(http://)', re.IGNORECASE)
 def calculateMoodsSentiment():
     global tweetNumber
     days = {}
-    print "Number of tweets: " + tweets.count
+    print "Number of tweets: " + str(tweets.count())
     for tweet in tweets.find():
         # for printing progress
         tweetNumber += 1
 
         # only process tweets that don't have http:// in there
-        if http_regex.findall(tweet["text"]) is 0:
+        if len(http_regex.findall(tweet["text"])) is 0:
 
             date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
             key = str(date.month) + "/" + str(date.day)
@@ -67,6 +67,10 @@ def calculateMoodsSentiment():
                     days[key][0][i] += tweetMoods[i]
             else:
                 days[key] = [tweetMoods, 1.0]
+
+        # else:
+            # http found
+            # print "http found: " + unicode(tweet["text"]).encode('utf-8')
 
     outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
     line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
