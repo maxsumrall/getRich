@@ -29,7 +29,7 @@ total = 50000
 def printit():
     if not finish:
         threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%f%%" % ((tweetNumber/float(total))*100))
+    sys.stdout.write("\r%6.2f%%" % ((tweetNumber/float(total))*100))
 
 
 # def calculateAverageSentiment():
