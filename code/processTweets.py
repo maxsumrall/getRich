@@ -52,7 +52,7 @@ def calculateMoodsSentiment():
     try:
         global tweetNumber
         global days
-        print "Number of tweets: " + str(tweets.count())
+        # print "Number of tweets: " + str(tweets.count())
         for tweet in tweets.find():
             # for printing progress
             tweetNumber += 1
