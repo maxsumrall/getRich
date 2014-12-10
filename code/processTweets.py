@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime, re
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys, time, datetime, re
 
 
 client = pymongo.MongoClient('giedomak.nl')
