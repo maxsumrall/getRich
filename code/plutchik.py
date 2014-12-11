@@ -22,7 +22,7 @@ class Emotion:
 
     def getRegex(self):
         # load and create regexes
-        inner_patern = ('|'.join(open('plutchik/'+self.name+'.txt', 'r').read().splitlines()))
+        inner_patern = ('|'.join(open('./plutchik/'+self.name+'.txt', 'r').read().splitlines()))
         pattern = '(' + inner_patern + ')'
         self.regex = re.compile(pattern, re.IGNORECASE)
         self.negationRegex = re.compile(negationPatern + inner_patern, re.IGNORECASE)

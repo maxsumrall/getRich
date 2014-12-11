@@ -1,11 +1,24 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime, re
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime , subprocess, re
 
+# command line parameters
+# use processTweets.py -m to use localhost mongodb, else giedomak.nl mongodb will be used
+# use processTweets.py -n 1000 to process 1000 tweets, else all will be done
+if "-m" in sys.argv:
+    print "local mongodb"
+    client = pymongo.MongoClient()
+else:
+    print "giedomak.nl mongodb"
+    client = pymongo.MongoClient('giedomak.nl')
 
-client = pymongo.MongoClient('giedomak.nl')
 db = client.test_database
 tweets = db.tweets
+
+if "-n" in sys.argv:
+    total = int(sys.argv[sys.argv.index("-n")+1])
+else:
+    total = tweets.count()
 
 # emotional_words_filter = ["i feel", "i am feeling",
 #                           "i'm feeling", "im feeling",
@@ -15,15 +28,18 @@ tweets = db.tweets
 #                           "makes me"]
 # emotional_words_filter_set = set(emotional_words_filter)
 tweetNumber = 0
+done = False
+tweetMatch = 0
 finish = False
 
 days = {}
+print "Processing " + str(total) + " tweets"
 
 
 def printit():
     if not finish:
         threading.Timer(5.0, printit).start()
-    sys.stdout.write("\r%f%%" % (tweetNumber/float(tweets.count()))*100)
+        sys.stdout.write("\r%6.2f%% Tweets filtered out: %6.2f%%" % ((tweetNumber/float(total)*100), ((1-(tweetMatch/float(tweetNumber+1)))*100)))
 
 
 # def calculateAverageSentiment():
@@ -50,15 +66,20 @@ http_regex = re.compile('(http://)', re.IGNORECASE)
 
 def calculateMoodsSentiment():
     try:
+        global tweetMatch
         global tweetNumber
         global days
-        print "Number of tweets: " + str(tweets.count())
-        for tweet in tweets.find():
+        # print "Number of tweets: " + str(tweets.count())
+        for tweet in tweets.find()[:total]:
             # for printing progress
             tweetNumber += 1
 
             # only process tweets that don't have http:// in there
-            if len(http_regex.findall(tweet["text"])) is 0:
+            # if len(http_regex.findall(tweet["text"])) is 0:
+            # print tweet["text"][:2]
+            if tweet["text"].find("http://") is -1 and tweet["text"][:2] == "RT":
+                # print tweet["text"]
+                tweetMatch += 1
 
                 date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
                 key = str(date.month) + "/" + str(date.day)
@@ -71,12 +92,12 @@ def calculateMoodsSentiment():
                     days[key] = [tweetMoods, 1.0]
 
             # else:
-                # http found
-                # print "http found: " + unicode(tweet["text"]).encode('utf-8')
+            #     print "http found: " + unicode(tweet["text"]).encode('utf-8')
 
-        outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
+        outfile_name = "output_results" + str(time.time()).replace(".","_") + ".csv"
+        outfile = open(outfile_name,"w")
         line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
-        print line
+        print "\n\n" + line
         outfile.writelines(line + "\n")
         for key in days.keys():
             sentiments, count = days[key]
@@ -112,6 +133,7 @@ def calculateMoodsSentiment():
                 avg[i][1][j] = (avg[i][1][j] - min) / (max - min)
         line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
         outfile.writelines(line + "\n")
+        print
         for day in avg:
             line = day[0] \
                   + "," + str(day[1][0]) \
@@ -124,6 +146,24 @@ def calculateMoodsSentiment():
                   + "," + str(day[1][7])
             print line
             outfile.writelines(line + "\n")
+        outfile.close()
+        subprocess.check_output("cp "+outfile_name + "/usr/share/nginx/html/output.csv", shell=True)
+
+
+        # for frontend
+        labels = []
+        for key in days.keys():
+            labels.append(key)
+
+        sentiment = [[] for x in range(8)]
+        for key in days.keys():
+            sentiments, count = days[key]
+            for i in range(len(sentiment)):
+                sentiment[i].append(sentiments[i]/count)
+
+        print labels
+        print sentiment
+
         outfile.close()
 
     except KeyboardInterrupt:
