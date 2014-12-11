@@ -14,7 +14,7 @@ else:
 
 db = client.test_database
 tweets = db.tweets
-
+results_collection = db.results
 if "-n" in sys.argv:
     total = int(sys.argv[sys.argv.index("-n")+1])
 else:
@@ -147,7 +147,7 @@ def calculateMoodsSentiment():
             print line
             outfile.writelines(line + "\n")
         outfile.close()
-        subprocess.check_output("cp "+outfile_name + "/usr/share/nginx/html/output.csv", shell=True)
+        subprocess.check_output("cp "+outfile_name + " output.csv", shell=True)
 
 
         # for frontend
@@ -164,6 +164,7 @@ def calculateMoodsSentiment():
         print labels
         print sentiment
 
+        results_collection.insert(days)
         outfile.close()
 
     except KeyboardInterrupt:
