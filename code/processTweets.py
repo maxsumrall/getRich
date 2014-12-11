@@ -20,13 +20,6 @@ if "-n" in sys.argv:
 else:
     total = tweets.count()
 
-# emotional_words_filter = ["i feel", "i am feeling",
-#                           "i'm feeling", "im feeling",
-#                           "i don't feel",
-#                           "i dont feel",
-#                           "im", "i am",
-#                           "makes me"]
-# emotional_words_filter_set = set(emotional_words_filter)
 tweetNumber = 0
 done = False
 tweetMatch = 0
@@ -40,28 +33,6 @@ def printit():
     if not finish:
         threading.Timer(5.0, printit).start()
         sys.stdout.write("\r%6.2f%% Tweets filtered out: %6.2f%%" % ((tweetNumber/float(total)*100), ((1-(tweetMatch/float(tweetNumber+1)))*100)))
-
-
-# def calculateAverageSentiment():
-#     currDay = 0
-#     sumToday = 0.0
-#     countToday = 1.0
-#     days = {}
-#     for tweet in tweets.find():
-#         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-#             date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
-#             key = str(date.month) + "/" + str(date.day)
-#             if key in days.keys():
-#                 sumToday, countToday = days[key]
-#             else:
-#                 sumToday, countToday = (0.0, 0.0)
-#             sumToday += Sentiment.Sentiment(tweet["text"])
-#             countToday += 1.0
-#             days[key] = (sumToday, countToday)
-#     for key in days.keys():
-#         print key + ", " + str(days[key][0] / days[key][1])
-
-http_regex = re.compile('(http://)', re.IGNORECASE)
 
 
 def calculateMoodsSentiment():
@@ -170,14 +141,6 @@ def calculateMoodsSentiment():
     except KeyboardInterrupt:
         global finish
         finish = True
-
-
-# def countEmotWords():
-#     count = 0
-#     for tweet in tweets.find():
-#         if len(set(tweet["text"].lower().split()) & emotional_words_filter_set) > 0:
-#             count += 1
-#     print count
 
 printit()
 calculateMoodsSentiment()
