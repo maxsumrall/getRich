@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys, time, datetime, re
+import os, json, subprocess, pymongo, plutchik, Sentiment, threading, sys,time,datetime , subprocess, re
 
 # command line parameters
 # use processTweets.py -m to use localhost mongodb, else giedomak.nl mongodb will be used
@@ -28,6 +28,7 @@ else:
 #                           "makes me"]
 # emotional_words_filter_set = set(emotional_words_filter)
 tweetNumber = 0
+done = False
 tweetMatch = 0
 finish = False
 
@@ -93,7 +94,8 @@ def calculateMoodsSentiment():
             # else:
             #     print "http found: " + unicode(tweet["text"]).encode('utf-8')
 
-        outfile = open("output_results" + str(time.time()).replace(".","_") + ".csv","w")
+        outfile_name = "output_results" + str(time.time()).replace(".","_") + ".csv"
+        outfile = open(outfile_name,"w")
         line = "day,joy,trust,fear,surprise,sadness,disgust,anger,anticipation"
         print "\n\n" + line
         outfile.writelines(line + "\n")
@@ -144,6 +146,9 @@ def calculateMoodsSentiment():
                   + "," + str(day[1][7])
             print line
             outfile.writelines(line + "\n")
+        outfile.close()
+        subprocess.check_output("cp "+outfile_name + "/usr/share/nginx/html/output.csv", shell=True)
+
 
         # for frontend
         labels = []
