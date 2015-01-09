@@ -24,6 +24,12 @@ json_data = data_file.read().replace("\n", "")
 #data_file.close()
 
 
+def convert_keys_to_string(dictionary):
+    """Recursively converts dictionary keys to strings."""
+    if not isinstance(dictionary, dict):
+        return dictionary
+    return dict((str(k), convert_keys_to_string(v))
+        for k, v in dictionary.items())
 
 class index:
     def GET(self):
@@ -36,11 +42,11 @@ class data:
         web.header('Access-Control-Allow-Origin',      '*')
         data = []
         for i in range(30):
-            date = (datetime.today - timedelta(days=-i))
+            date = (datetime.today() + timedelta(days=-i))
             date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
             print date_key
             try:
-                data.append(col.find({'x':date_key}).next())
+                data.append(convert_keys_to_string(col.find({'x':date_key}).next()))
             except:
                 pass
 
