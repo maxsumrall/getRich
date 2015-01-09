@@ -8,7 +8,7 @@ import pymongo
 def dateTimeAndPlutchik(tweet):
     date = datetime.datetime.strptime(tweet[0], '%a %b %d %H:%M:%S +0000 %Y')
     key = str(date.month) + "/" + str(date.day)
-    tweetMoods = plutchik.executeTweet(tweet[1:])
+    tweetMoods = plutchik.executeTweet(tweet[1])
     return key, tweetMoods
 
 
@@ -24,6 +24,7 @@ ssc = StreamingContext(sc, 1)
 
 stream = ssc.socketTextStream("localhost", 9999)
 tweetData = stream.flatMap(lambda line: line.split("\r\n"))
+tweetData.pprint()
 
 #tweetData = sc.textFile(logFile).cache()
 # tweetData = sc.parallelize([
@@ -49,10 +50,17 @@ tweetData = stream.flatMap(lambda line: line.split("\r\n"))
 # print tweetdata.collect()
 
 tweetData = tweetData.map(lambda s: s.split(";"))
-tweetData = tweetData.filter(lambda t: not("http://" in t[1:]) and "RT" in t[1:])
+tweetData = tweetData.map(lambda s: (s[0], ''.join(str(x) for x in s[1:])))
+tweetData.pprint()
+tweetData = tweetData.filter(lambda t: not("http" in t[1]) and "RT" in t[1])
+# tweetData = tweetData.filter(lambda t: "RT" in t[1:])
+tweetData.pprint()
 
 moodData = tweetData.map(dateTimeAndPlutchik)
+moodData.pprint()
 moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
+moodData.pprint()
+# print moodData.pprint()
 
 # moodData.pprint()
 
