@@ -6,9 +6,9 @@ import plutchik
 import pymongo
 
 def dateTimeAndPlutchik(tweet):
-    date = datetime.datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+    date = datetime.datetime.strptime(tweet[0], '%a %b %d %H:%M:%S +0000 %Y')
     key = str(date.month) + "/" + str(date.day)
-    tweetMoods = plutchik.executeTweet(tweet["text"])
+    tweetMoods = plutchik.executeTweet(tweet[1:])
     return key, tweetMoods
 
 
@@ -47,21 +47,22 @@ tweetData = ssc.socketTextStream("localhost", 9999)
 
 # print tweetdata.collect()
 
-tweetData = tweetData.filter(lambda t: not("http://" in t["text"]) and "RT" in t["text"])
+tweetData = tweetData.map(lambda s: s.split(";"))
+tweetData = tweetData.filter(lambda t: not("http://" in t[1:]) and "RT" in t[1:])
 
 moodData = tweetData.map(dateTimeAndPlutchik)
 moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 
-moodData.pprint()
+# moodData.pprint()
 
-# moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b)).collect()
-# moodCount = moodData.countByKey()
+moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
+# moodCount = moodData.countByKey()     # No count in streaming API
 
-# moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal)
+moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
 
-# print moodTotal
-# print moodCount
-# print moodDay
+moodTotal.pprint()
+moodCount.pprint()
+moodDay.pprint()
 
 ssc.start()             # Start the computation
 ssc.awaitTermination()  # Wait for the computation to terminate
