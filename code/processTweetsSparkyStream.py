@@ -28,6 +28,7 @@ if "-ip" in sys.argv:
 if "-port" in sys.argv:
     TCP_PORT = sys.argv[sys.argv.index("-port")+1]
 
+print "get tweets"
 db = client.test_database
 tweets = db.tweets
 
@@ -36,11 +37,22 @@ if total > 0:
 else:
     tweetlist = tweets.find()
 
+print "Start TCP server"
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((TCP_IP, TCP_PORT))
+s.settimeout(None)
+s.bind((TCP_IP, TCP_PORT))
+s.listen(1)
 
-for tweet in tweetlist:
-    s.send((tweet["created_at"] + unicode(";") + tweet["text"]).encode("utf-8"))
-    print tweet["created_at"]
 
-s.close()
+while 1:
+    print "Waiting for client..."
+    conn, addr = s.accept()
+    print 'Connection address:', addr
+
+    print "Sending tweets..."
+    #conn.send("test123")
+    for tweet in tweetlist:
+        conn.send((tweet["created_at"] + ";" + tweet["text"]).encode("utf-8"))
+
+    conn.close()
+    print "Tweets send"
