@@ -58,11 +58,11 @@ moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
 # moodCount = moodData.countByKey()     # No count in streaming API
 
-moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
+# moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
 
 moodTotal.pprint()
-moodCount.pprint()
-moodDay.pprint()
+# moodCount.pprint()
+# moodDay.pprint()
 
 ssc.start()             # Start the computation
 ssc.awaitTermination()  # Wait for the computation to terminate
