@@ -3,7 +3,7 @@ __author__ = 'max'
 import web
 import json
 import pymongo
-import datetime
+from datetime import *
 
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client.test_database
