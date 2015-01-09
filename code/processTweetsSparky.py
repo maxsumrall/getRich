@@ -12,7 +12,8 @@ def dateTimeAndPlutchik(tweet):
         tweetMoods = plutchik.executeTweet(tweet[1])
         return key, tweetMoods
     except:
-        print "not a date"
+        # print "not a date"
+        return "none", [0]
 
 
 def retrieve(t):
@@ -28,7 +29,7 @@ def split_tweet(t):
 
 
 logFile = "C:\spark-1.2.0-bin-hadoop2.4/README.md"  # Should be some file on your system
-sc = SparkContext("local[4]", "GetRich")
+sc = SparkContext("local[2]", "GetRich")
 ssc = StreamingContext(sc, 1)
 
 stream = ssc.socketTextStream("localhost", 9999)
