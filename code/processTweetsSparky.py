@@ -22,7 +22,8 @@ logFile = "C:\spark-1.2.0-bin-hadoop2.4/README.md"  # Should be some file on you
 sc = SparkContext("local[2]", "GetRich")
 ssc = StreamingContext(sc, 1)
 
-tweetData = ssc.socketTextStream("localhost", 9999)
+stream = ssc.socketTextStream("localhost", 9999)
+tweetData = stream.flatMap(lambda line: line.split("\r\n"))
 
 #tweetData = sc.textFile(logFile).cache()
 # tweetData = sc.parallelize([
@@ -58,11 +59,11 @@ moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
 # moodCount = moodData.countByKey()     # No count in streaming API
 
-moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
+# moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
 
 moodTotal.pprint()
-moodCount.pprint()
-moodDay.pprint()
+# moodCount.pprint()
+# moodDay.pprint()
 
 ssc.start()             # Start the computation
 ssc.awaitTermination()  # Wait for the computation to terminate
