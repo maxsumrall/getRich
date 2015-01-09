@@ -47,6 +47,7 @@ class data:
             print date_key
             try:
                 data.append(convert_keys_to_string(col.find({'x':date_key}).next()))
+                data[-1]['x'] = str(data[-1]['x'])
             except:
                 pass
 
