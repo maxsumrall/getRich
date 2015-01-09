@@ -19,7 +19,7 @@ class index:
     def GET(self):
         web.header('Access-Control-Allow-Origin',      '*')
         return "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-e
+
 
 class data:
     def GET(self):
