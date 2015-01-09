@@ -44,15 +44,15 @@ s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
 
 
-while 1:
-    print "Waiting for client..."
-    conn, addr = s.accept()
-    print 'Connection address:', addr
+#while 1:
+print "Waiting for client..."
+conn, addr = s.accept()
+print 'Connection address:', addr
 
-    print "Sending tweets..."
-    #conn.send("test123")
-    for tweet in tweetlist:
-        conn.send((tweet["created_at"] + ";" + tweet["text"]).encode("utf-8"))
+print "Sending tweets..."
+#conn.send("test123")
+for tweet in tweetlist:
+    conn.send((tweet["created_at"] + ";" + tweet["text"] + "\r\n").encode("utf-8"))
 
-    conn.close()
-    print "Tweets send"
+conn.close()
+print "Tweets send"

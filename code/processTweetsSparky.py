@@ -22,7 +22,8 @@ logFile = "C:\spark-1.2.0-bin-hadoop2.4/README.md"  # Should be some file on you
 sc = SparkContext("local[2]", "GetRich")
 ssc = StreamingContext(sc, 1)
 
-tweetData = ssc.socketTextStream("localhost", 9999)
+stream = ssc.socketTextStream("localhost", 9999)
+tweetData = stream.flatMap(lambda line: line.split("\r\n"))
 
 #tweetData = sc.textFile(logFile).cache()
 # tweetData = sc.parallelize([
