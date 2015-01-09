@@ -8,8 +8,8 @@ urls = (
 )
 
 data_file_name = "data.json"
-data_file = open(data_file_name,'r')
-data = data_file.readall()
+data_file = open(data_file_name, 'r')
+data = data_file.readlines()
 #data = json.load(data_file)
 #data_file.close()
 
