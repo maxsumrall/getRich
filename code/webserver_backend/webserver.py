@@ -14,7 +14,7 @@ col = db.results
 
 urls = (
     '/', 'index',
-    "/data", "data"
+    "/data", "getdata"
 )
 
 data_file_name = "data.json"
@@ -37,22 +37,23 @@ class index:
         return "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 
-class data:
+class getdata:
     def GET(self):
         web.header('Access-Control-Allow-Origin',      '*')
-        data = []
+        web.header('Content-Type', 'application/json')
+
+        data = {}
         for i in range(30):
             date = (datetime.today() + timedelta(days=-i))
             date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
-            print date_key
             try:
-                data.append(convert_keys_to_string(col.find({'x':date_key}).next()))
-                data[-1]['x'] = str(data[-1]['x'])
+                data[date_key] = (convert_keys_to_string(col.find({'x':date_key}).next()))
+                #data[-1]['x'] = str(data[-1]['x'])
+                del data[date_key]["_id"]
+                #data[-1] = json.dumps(data[-1])
             except:
                 pass
-
-        return data
-
+        return json.dumps(data)
 
 
 
