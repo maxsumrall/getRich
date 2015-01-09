@@ -26,7 +26,7 @@ if "-ip" in sys.argv:
     TCP_IP = sys.argv[sys.argv.index("-ip")+1]
 
 if "-port" in sys.argv:
-    TCP_PORT = sys.argv[sys.argv.index("-port")+1]
+    TCP_PORT = int(sys.argv[sys.argv.index("-port")+1])
 
 print "get tweets"
 db = client.test_database
