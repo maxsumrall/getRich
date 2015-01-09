@@ -36,7 +36,7 @@ class data:
         web.header('Access-Control-Allow-Origin',      '*')
         data = []
         for i in range(30):
-            date = (datetime.today - datetime.timedelta(days=-i))
+            date = (datetime.today - timedelta(days=-i))
             date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
             print date_key
             try:
