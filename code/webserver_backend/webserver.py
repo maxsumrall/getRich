@@ -9,7 +9,7 @@ urls = (
 
 data_file_name = "data.json"
 data_file = open(data_file_name, 'r')
-data = data_file.read().replace("\n", "")
+json_data = data_file.read().replace("\n", "")
 #data = json.load(data_file)
 #data_file.close()
 
@@ -19,12 +19,12 @@ class index:
     def GET(self):
         web.header('Access-Control-Allow-Origin',      '*')
         return "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-
+e
 
 class data:
     def GET(self):
         web.header('Access-Control-Allow-Origin',      '*')
-        return json.dumps(data)
+        return json.dumps(json_data)
 
 
 
