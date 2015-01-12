@@ -10,7 +10,7 @@ import os
 def dateTimeAndPlutchik(tweet):
     try:
         date = datetime.datetime.strptime(tweet[0], '%a %b %d %H:%M:%S +0000 %Y')
-        key = str(date.month) + "/" + str(date.day)
+        key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
         tweetMoods = plutchik.executeTweet(tweet[1])
         return key, tweetMoods
     except:
@@ -96,6 +96,12 @@ moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 30)
 
 #moodTotal.saveAsTextFiles("test")
 
+# joy,trust,fear,surprise, sadness,disgust,anger,anticipation
+def makeJson(line):
+    return {'x': line[0], 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
+    'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
+    'anger':line[1][6]/line[1][8], 'anticipation':line[1][7]/line[1][8]}
+
 
 def processResults(rdd):
     print rdd.collect()
@@ -105,6 +111,15 @@ def processResults(rdd):
             i += 1
         rdd.saveAsTextFile("testResults" + str(i))
         print "results!!!!!!!!!!" + str(i)
+
+        # Put it in MongoDB!
+        client = pymongo.MongoClient("giedomak.nl")
+        db = client.test_database
+        col = db.results
+        for line in rdd.collect():
+            result = makeJson(line)
+            print result
+            col.save(result)
 
 moodTotal.foreachRDD(processResults)
 
