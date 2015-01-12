@@ -106,7 +106,7 @@ def makeJson(line):
     return {'x': line[0], '_id':line[0], 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
     'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
     'anger':line[1][6]/line[1][8], 'anticipation':line[1][7]/line[1][8],
-    'prediction':0, 'Stock':ystock}
+    'prediction':0, 'Stock':ystock, 'total':line[1][8]}
 
 
 def processResults(rdd):
