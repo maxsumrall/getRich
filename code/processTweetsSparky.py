@@ -6,6 +6,7 @@ import plutchik
 import pymongo
 import time
 import os
+import ystockquote
 
 def dateTimeAndPlutchik(tweet):
     try:
@@ -98,10 +99,14 @@ moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 30)
 
 # joy,trust,fear,surprise, sadness,disgust,anger,anticipation
 def makeJson(line):
+    date = datetime.datetime.strptime(line[0], '%d/%m/%y')
+    date_y = date.year + "-" + date.month + "-" + date.day
+    ystock_dict = ystockquote.get_historical_prices("^IXIC",date_y,date_y)
+    ystock = ystock_dict[date_y].Close
     return {'x': line[0], '_id':line[0], 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
     'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
     'anger':line[1][6]/line[1][8], 'anticipation':line[1][7]/line[1][8],
-    'prediction':0, 'Stock':0}
+    'prediction':0, 'Stock':ystock}
 
 
 def processResults(rdd):
