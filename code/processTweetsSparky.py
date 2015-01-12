@@ -37,6 +37,7 @@ def add_count_number(t):
 logFile = "C:\spark-1.2.0-bin-hadoop2.4/README.md"  # Should be some file on your system
 sc = SparkContext("local", "GetRich")
 ssc = StreamingContext(sc, 1)
+ssc.checkpoint("checkpoint")
 
 stream = ssc.socketTextStream("localhost", 9999)
 tweetData = stream.flatMap(lambda line: line.split("\r\n"))
@@ -83,8 +84,10 @@ moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 # moodData.pprint()
 
 moodData = moodData.map(add_count_number)
+moodData.checkpoint(15)
 
-moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
+#moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
+moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 3, 2)
 # moodCount = moodData.countByKey()     # No count in streaming API
 
 # moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
