@@ -8,6 +8,7 @@ import time
 import os
 import processTweetsSparkyStream
 import ystockquote
+import sys
 
 def dateTimeAndPlutchik(tweet):
     try:
@@ -57,7 +58,12 @@ def processResults(rdd):
         print "results!!!!!!!!!!" + str(i)
 
         # Put it in MongoDB!
-        client = pymongo.MongoClient("giedomak.nl")
+        if "-m" in sys.argv:
+            print "local mongodb"
+            client = pymongo.MongoClient()
+        else:
+            print "giedomak.nl mongodb"
+            client = pymongo.MongoClient('giedomak.nl')
         db = client.test_database
         col = db.results
         for line in rdd.collect():
