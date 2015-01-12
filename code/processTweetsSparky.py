@@ -86,8 +86,10 @@ moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 moodData = moodData.map(add_count_number)
 moodData.checkpoint(15)
 
-#moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
-moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 3, 2)
+moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
+moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 30)
+#moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 60*60)
+#moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 7*60*60)
 # moodCount = moodData.countByKey()     # No count in streaming API
 
 # moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
