@@ -4,6 +4,8 @@ from operator import add
 import datetime
 import plutchik
 import pymongo
+import time
+import os
 
 def dateTimeAndPlutchik(tweet):
     try:
@@ -13,7 +15,7 @@ def dateTimeAndPlutchik(tweet):
         return key, tweetMoods
     except:
         # print "not a date"
-        return "none", [0]
+        return "none", [0, 0, 0, 0, 0, 0, 0, 0]
 
 
 def retrieve(t):
@@ -87,11 +89,26 @@ moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
 
 # moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
 
-moodTotal.saveAsTextFiles("test")
+#moodTotal.saveAsTextFiles("test")
+
+
+def processResults(rdd):
+    print rdd.collect()
+    if(len(rdd.collect()) > 0):
+        i = 0
+        while os.path.isdir("testResults" + str(i)):
+            i += 1
+        rdd.saveAsTextFile("testResults" + str(i))
+        print "results!!!!!!!!!!" + str(i)
+
+moodTotal.foreachRDD(processResults)
 
 moodTotal.pprint()
 # moodCount.pprint()
 # moodDay.pprint()
 
 ssc.start()             # Start the computation
-ssc.awaitTermination()  # Wait for the computation to terminate
+#raw_input('Press enter to close')
+time.sleep(30)
+#ssc.awaitTermination()  # Wait for the computation to terminate
+ssc.stop(stopSparkContext=True, stopGraceFully=True)

@@ -1,6 +1,7 @@
 import pymongo
 import socket
 import sys
+import datetime
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = 9999
@@ -36,6 +37,7 @@ if total > 0:
     tweetlist = tweets.find(limit=total)
 else:
     tweetlist = tweets.find()
+    total = tweetlist.count()
 
 print "Start TCP server"
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -51,12 +53,19 @@ print 'Connection address:', addr
 
 print "Sending tweets..."
 n = 0
+startTime = datetime.datetime.now()
+print "Start time: " + str(startTime)
 #conn.send("test123")
 for tweet in tweetlist:
     conn.send((tweet["created_at"] + ";" + tweet["text"] + "\r\n").encode("utf-8"))
     n = n + 1
     if n%10000 == 0:
-        print "Send " + str(n) + "/" + str(total) + " tweets..."
+        currentTime = datetime.datetime.now()
+        print "current time: " + str(currentTime)
+        differenceTime = currentTime-startTime
+        remainingTime = differenceTime/n*(total-n)
+        endTime = currentTime+remainingTime
+        print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
 conn.close()
 print "Tweets send"
