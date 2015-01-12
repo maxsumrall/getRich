@@ -7,11 +7,13 @@ import pymongo
 import time
 import os
 import processTweetsSparkyStream
+import ystockquote
 
 def dateTimeAndPlutchik(tweet):
     try:
         date = datetime.datetime.strptime(tweet[0], '%a %b %d %H:%M:%S +0000 %Y')
-        key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
+        # key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
+        key = '{dt:%x}'.format(dt=date)
         tweetMoods = plutchik.executeTweet(tweet[1])
         return key, tweetMoods
     except:
@@ -34,11 +36,16 @@ def addToState(newMood, runningTotal):
         return map(add, reduce(lambda a, b: (map(add, a, b)), newMood, [0, 0, 0, 0, 0, 0, 0, 0, 0]), runningTotal)
 
 def makeJson(line):
-    # joy,trust,fear,surprise, sadness,disgust,anger,anticipation
-    return {'x': line[0], '_id':line[0], 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
+    date_y = '{dt.year}-{dt:%m}-{dt:%d}'.format(dt=datetime.datetime.strptime(line[0], '%x'))
+    date_json = '{dt.day}/{dt.month}/{dt.year}'.format(dt=datetime.datetime.strptime(line[0], '%x'))
+
+    ystock_dict = ystockquote.get_historical_prices("^IXIC",date_y,date_y)
+    ystock = ystock_dict[date_y]["Close"] if ystock_dict[date_y] else 0
+
+    return {'x': date_json, '_id':date_json, 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
     'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
     'anger':line[1][6]/line[1][8], 'anticipation':line[1][7]/line[1][8],
-    'prediction':0, 'Stock':0}
+    'prediction':0, 'Stock':ystock, 'total':line[1][8]}
 
 def processResults(rdd):
     print rdd.collect()
