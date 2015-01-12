@@ -86,11 +86,21 @@ moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 moodData = moodData.map(add_count_number)
 moodData.checkpoint(15)
 
-moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
-moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 30)
-#moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 60*60)
-#moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 7*60*60)
+# moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
+# moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), lambda a, b: a, 3, 2)
+# moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 60*60)
+# moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 7*60*60)
 # moodCount = moodData.countByKey()     # No count in streaming API
+
+def addToState(newMood, runningTotal):
+    if(runningTotal is None):
+        print newMood
+        return newMood
+    else:
+        print map(add, newMood, runningTotal)
+        return map(add, newMood, runningTotal)
+
+moodTotal = moodData.updateStateByKey(addToState)
 
 # moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
 
@@ -114,6 +124,6 @@ moodTotal.pprint()
 
 ssc.start()             # Start the computation
 #raw_input('Press enter to close')
-time.sleep(30)
-#ssc.awaitTermination()  # Wait for the computation to terminate
-ssc.stop(stopSparkContext=True, stopGraceFully=True)
+#time.sleep(10)
+ssc.awaitTermination()  # Wait for the computation to terminate
+#ssc.stop(stopSparkContext=True, stopGraceFully=True)

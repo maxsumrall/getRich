@@ -57,7 +57,7 @@ startTime = datetime.datetime.now()
 print "Start time: " + str(startTime)
 #conn.send("test123")
 for tweet in tweetlist:
-    conn.send((tweet["created_at"] + ";" + tweet["text"] + "\r\n").encode("utf-8"))
+    conn.send((tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n").encode("utf-8"))
     n = n + 1
     if n%10000 == 0:
         currentTime = datetime.datetime.now()
