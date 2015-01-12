@@ -27,6 +27,10 @@ def split_tweet(t):
     result.extend([""])
     return result
 
+def add_count_number(t):
+    t[1].append(1)
+    return t
+
 
 logFile = "C:\spark-1.2.0-bin-hadoop2.4/README.md"  # Should be some file on your system
 sc = SparkContext("local[2]", "GetRich")
@@ -75,6 +79,8 @@ moodData = moodData.filter(lambda t: not all(m == 0 for m in t[1]))
 # print moodData.pprint()
 
 # moodData.pprint()
+
+moodData = moodData.map(add_count_number)
 
 moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
 # moodCount = moodData.countByKey()     # No count in streaming API
