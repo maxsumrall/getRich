@@ -43,7 +43,7 @@ class getdata:
         web.header('Content-Type', 'application/json')
 
         data = {}
-        for i in range(30):
+        for i in range(250):
             date = (datetime.today() + timedelta(days=-i))
             date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
             try:
