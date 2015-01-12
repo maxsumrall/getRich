@@ -40,8 +40,11 @@ def makeJson(line):
     date_y = '{dt.year}-{dt:%m}-{dt:%d}'.format(dt=datetime.datetime.strptime(line[0], '%x'))
     date_json = '{dt.day}/{dt.month}/{dt.year}'.format(dt=datetime.datetime.strptime(line[0], '%x'))
 
-    ystock_dict = ystockquote.get_historical_prices("^IXIC",date_y,date_y)
-    ystock = ystock_dict[date_y]["Close"] if ystock_dict[date_y] else 0
+    try:
+        ystock_dict = ystockquote.get_historical_prices("^IXIC",date_y,date_y)
+        ystock = ystock_dict[date_y]["Close"] if ystock_dict[date_y] else 0
+    except:
+        ystock = 0
 
     return {'x': date_json, '_id':date_json, 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
     'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
