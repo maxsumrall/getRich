@@ -102,10 +102,12 @@ moodTotal = moodData.reduceByKeyAndWindow(lambda a, b: map(add, a, b), None, 30)
 def makeJson(line):
     # date = datetime.datetime.strptime(line[0], '%-d/%-m/%y')
     date_y = '{dt.year}-{dt:%m}-{dt:%d}'.format(dt=datetime.datetime.strptime(line[0], '%x'))
+    print date_y
     date_json = '{dt.day}-{dt.month}-{dt.year}'.format(dt=datetime.datetime.strptime(line[0], '%x'))
     # date_y = str(date.year) + "-" + str(date.month) + "-" + str(date.day)
     ystock_dict = ystockquote.get_historical_prices("^IXIC",date_y,date_y)
-    ystock = ystock_dict[date_y].Close
+    print ystock_dict
+    ystock = ystock_dict[date_y].Close if ystock_dict[date_y]
     return {'x': date_json, '_id':date_json, 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
     'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
     'anger':line[1][6]/line[1][8], 'anticipation':line[1][7]/line[1][8],
