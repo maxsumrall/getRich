@@ -107,7 +107,7 @@ def makeJson(line):
     # date_y = str(date.year) + "-" + str(date.month) + "-" + str(date.day)
     ystock_dict = ystockquote.get_historical_prices("^IXIC",date_y,date_y)
     print ystock_dict
-    ystock = ystock_dict[date_y].Close if ystock_dict[date_y]
+    ystock = ystock_dict[date_y].Close if ystock_dict[date_y] else 0
     return {'x': date_json, '_id':date_json, 'joy':line[1][0]/line[1][8], 'trust':line[1][1]/line[1][8], 'fear':line[1][2]/line[1][8],
     'surprise':line[1][3]/line[1][8], 'sadness':line[1][4]/line[1][8], 'disgust':line[1][5]/line[1][8],
     'anger':line[1][6]/line[1][8], 'anticipation':line[1][7]/line[1][8],
