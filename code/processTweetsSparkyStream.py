@@ -50,9 +50,13 @@ conn, addr = s.accept()
 print 'Connection address:', addr
 
 print "Sending tweets..."
+n = 0
 #conn.send("test123")
 for tweet in tweetlist:
     conn.send((tweet["created_at"] + ";" + tweet["text"] + "\r\n").encode("utf-8"))
+    n = n + 1
+    if n%10000 == 0:
+        print "Send " + str(n) + "/" + str(total) + " tweets..."
 
 conn.close()
 print "Tweets send"

@@ -33,7 +33,7 @@ def add_count_number(t):
 
 
 logFile = "C:\spark-1.2.0-bin-hadoop2.4/README.md"  # Should be some file on your system
-sc = SparkContext("local[2]", "GetRich")
+sc = SparkContext("local", "GetRich")
 ssc = StreamingContext(sc, 1)
 
 stream = ssc.socketTextStream("localhost", 9999)
@@ -86,6 +86,8 @@ moodTotal = moodData.reduceByKey(lambda a, b: map(add, a, b))
 # moodCount = moodData.countByKey()     # No count in streaming API
 
 # moodDay = map(lambda a: (a[0], map(lambda b: b/moodCount[a[0]], a[1])), moodTotal.pprint())
+
+moodTotal.saveAsTextFiles("test")
 
 moodTotal.pprint()
 # moodCount.pprint()
