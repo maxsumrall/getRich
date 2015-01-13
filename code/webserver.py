@@ -4,7 +4,7 @@ import web
 import json
 import pymongo
 from datetime import *
-from .. import plutchik
+import plutchik
 
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client.test_database
