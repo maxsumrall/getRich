@@ -40,12 +40,12 @@ class getdata:
         web.header('Access-Control-Allow-Origin',      '*')
         web.header('Content-Type', 'application/json')
 
-        data = {}
+        data = []
         for i in range(250):
             date = (datetime.today() + timedelta(days=-i))
             date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
             try:
-                data[date_key] = (convert_keys_to_string(col.find({'x':date_key}).next()))
+                data.append(convert_keys_to_string(col.find({'x':date_key}).next()))
                 #data[-1]['x'] = str(data[-1]['x'])
                 del data[date_key]["_id"]
                 #data[-1] = json.dumps(data[-1])
@@ -76,6 +76,4 @@ class getsentiment:
 if __name__ == "__main__":
     app = web.application(urls, globals())
     app.run()
-
-
 
