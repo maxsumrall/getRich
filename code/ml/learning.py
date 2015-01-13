@@ -10,9 +10,9 @@ def converString(x): return float(x)
 data = []
 
 #how many days in the past has to be learned
-learnDaysBack = 14
+learnDaysBack = 7
 #on how many days has the neural network to be tested
-learnData = -14
+learnData = -7
 networkFormation = (learnDaysBack*9,20,10,1);
 clf = linear_model.Lasso(alpha=0.1)
 
@@ -104,13 +104,9 @@ testData(net, testDataInput, testDataActual)
 
 print "Lasso Bitches!"
 clf.fit(trainingSetInput[:learnData], trainingSetResult[:learnData])
-predicts = []
 for each in zip(testDataInput, testDataActual):
-    predicts.append(clf.predict(each[0]))
-    #print "Actual: " + str(each[1]) + " Predict: " + str(predicted) + " Difference: " + str(math.fabs(each[1] - predicted))
-    print str(each[1]).replace("[","").replace("]","")
-print " ;;;"
-for i in predicts:
-    print str(i).replace("[","").replace("]","")
+    predicted = clf.predict(each[0])
+    print "Actual: " + str(each[1]) + " Predict: " + str(predicted) + " Difference: " + str(math.fabs(each[1] - predicted))
+
 #NX.draw(net.graph)
 #pylab.show()
