@@ -57,8 +57,18 @@ class getsentiment:
     def GET(self):
         web.header('Access-Control-Allow-Origin',      '*')
 
-
-        return plutchik.executeTweet(web.input()["text"])
+        senti = plutchik.executeTweet(web.input()["text"])
+        return json.dumps({
+            "joy":senti[0],
+            "trust":senti[1],
+            "fear":senti[2],
+            "surprise":senti[3],
+            "sadness":senti[4],
+            "disgust":senti[5],
+            "anger":senti[6],
+            "anticipation":senti[7]
+        })
+        #return plutchik.executeTweet(web.input()["text"])
 
 
 
