@@ -4,6 +4,7 @@ import web
 import json
 import pymongo
 from datetime import *
+import plutchik
 
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client.test_database
@@ -14,7 +15,9 @@ col = db.results
 
 urls = (
     '/', 'index',
-    "/data", "getdata"
+    "/data", "getdata",
+    "/plutchik", "getsentiment"
+
 )
 
 data_file_name = "data.json"
@@ -54,6 +57,13 @@ class getdata:
             except:
                 pass
         return json.dumps(data)
+
+class getsentiment:
+    def GET(self):
+        web.header('Access-Control-Allow-Origin',      '*')
+
+
+        return plutchik.executeTweet(web.input()["text"])
 
 
 
