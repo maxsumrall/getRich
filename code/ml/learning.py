@@ -1,6 +1,7 @@
-__author__ = 'michiel'
 from ffnet import mlgraph, ffnet
+from sklearn import linear_model
 import networkx as NX
+import math
 import pylab
 import csv
 
@@ -9,15 +10,15 @@ def converString(x): return float(x)
 data = []
 
 #how many days in the past has to be learned
-learnDaysBack = 7
+learnDaysBack = 14
 #on how many days has the neural network to be tested
-learnData = -7
+learnData = -14
 networkFormation = (learnDaysBack*9,20,10,1);
-
+clf = linear_model.Lasso(alpha=0.1)
 
 def readData():
     #read data
-    with open('..\\..\\data\\sentiSorted.csv', 'rb') as csvfile:
+    with open('/Users/max/Documents/getRich/data/sentiSorted.csv', 'rb') as csvfile:
         rawData = csv.reader(csvfile, delimiter=';')
         rawData.next()
         for row in rawData:
@@ -101,5 +102,15 @@ net = ffnet(conec)
 net.train_tnc(trainingSetInput[:learnData], trainingSetResult[:learnData])
 testData(net, testDataInput, testDataActual)
 
+print "Lasso Bitches!"
+clf.fit(trainingSetInput[:learnData], trainingSetResult[:learnData])
+predicts = []
+for each in zip(testDataInput, testDataActual):
+    predicts.append(clf.predict(each[0]))
+    #print "Actual: " + str(each[1]) + " Predict: " + str(predicted) + " Difference: " + str(math.fabs(each[1] - predicted))
+    print str(each[1]).replace("[","").replace("]","")
+print " ;;;"
+for i in predicts:
+    print str(i).replace("[","").replace("]","")
 #NX.draw(net.graph)
 #pylab.show()

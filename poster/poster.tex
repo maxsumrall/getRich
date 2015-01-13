@@ -29,6 +29,8 @@
 \usetheme{confposter} % Use the confposter theme supplied with this template
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tikz}
 \usepackage{subcaption}
 \setbeamercolor{block title}{fg=ngreen,bg=white} % Colors of the block titles
 \setbeamercolor{block body}{fg=black,bg=white} % Colors of the body of blocks
@@ -71,17 +73,17 @@
 %	TITLE SECTION 
 %----------------------------------------------------------------------------------------
 
-\title{ Box Office Success Prediction based on Movie Attributes \hspace{1ex} 
-          \includegraphics[width=8ex]{logo.png}}
+\title{ \
+Get Rich - \underline{G}eneralized \underline{E}xamination of \underline{T}weets for\\ \underline{R}ecommendations of \underline{I}nvestment and Sto\underline{c}k Purc\underline{h}asing   \hspace{1ex} 
+          }
           
-\author{Jonathan Sumrall and Natalia Kuznetsova } % Author(s)
+\author{Jonathan Sumrall, Sander Kools, Giedo Mak, and Michiel Fortuin } % Author(s)
 
 \institute{Technical University of Eindhoven} % Institution(s)
 
 %----------------------------------------------------------------------------------------
 
 \begin{document}
-
 \addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
 \addtobeamertemplate{block alerted end}{}{\vspace*{2ex}} % White space under highlighted (alert) blocks
 
@@ -92,91 +94,122 @@
 
 \begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
 
-
+\begin{tikzpicture}[overlay, remember picture]
+\path (current page.north east) ++(-2,-2) node[below left] {\includegraphics[width=25ex]{logo.png}};
+\end{tikzpicture}
+\begin{tikzpicture}[overlay, remember picture]
+\path (current page.north west) ++(13,-1) node[below left] {\includegraphics[width=20ex]{getrichlogo.png}};
+\end{tikzpicture}
 
 
 \begin{column}{\twocolwid} % The first column
 
 \begin{block}{Goal}
 \centering
-\emph{Using only the attributes of a movie, predict whether or not it will be a success in the box office. }
+\emph{Using a general sample of tweets, calculate  daily mood trends and predict future prices of key stock market indexes. }
 \newline
 \end{block}
 
 \begin{block}{Data}
-We collected data from IMDB.com, who provide their database in a human-readable list (LST) format. IMDBPy builds a SQL database from the data, and provides methods for querying the data.  We make a new collection of only the movies which contain the attributes we are interested in. 
+We collected tweets from Twitter, who provide a stream of tweets as they arrive. Historical tweets from Archive.org were used for testing and development. 
 
 \begin{figure}
-          \includegraphics[width=70ex]{datafigure.pdf}
+          \includegraphics[width=70ex]{tweet_filtering.pdf}
           \caption{Data collection process}
 \end{figure}
 
-We give a score to each movie in our collection based on how many famous actors were in the movie, how experienced the director is, and whether or not the movie premiers near a holiday. 
 
-\begin{figure}
-          \includegraphics[width=50ex]{dataProcessingFigure.pdf}
-          \caption{Scoring movies based on actors, director experience, and premier date.}
-\end{figure}
 \end{block}
 
-\begin{block}{Sentiment analysis}
-The plots on the IMDB web site are written by users, therefore we hypothesize that they contain emotional sentiment. We apply Sentiment Analysis on the plots to convert them to a numerical representation. Two approaches were tried and compared. \\
 
-	\begin{table}
-	    \begin{tabular}{|p{0.5\textwidth}|p{0.5\textwidth}|}
-	    \hline
-	   	\textbf{NLTK Approach} & \textbf{Web search approach} \\ \hline
-	    Use Natural Language Toolkit's Naive Bayes Classifier & Compute average  semantic orientation with the use of web search engine queries \\ \hline
-	    \cellcolor{yellow} 2000 training set from NLTK corpus & \cellcolor{green} the Internet as a training set \\ \hline
-	    Query words after tokenization & Query phrases\\ \hline
-	    Take the proportion of positive and negative  frequencies & Take the distance from positive and negative evaluation\\ \hline
-	    \cellcolor{yellow} The size of training set & \cellcolor{red} The number of queries is restricted\\ \hline
-	    \end{tabular} 
-	    \end{table} 
+\begin{block}{Sentiment analysis}
+Sentiment analysis is perform on each tweet. We determine the mood based on Plutchik's wheel of emotions. 
+
+%\begin{wrapfigure}{R}{0.6\textwidth}
+\begin{center}
+\begin{figure}[ht!]
+\includegraphics[width=0.53\textwidth]{sentiment_scoring.pdf}
+\end{figure}
+\end{center}
+%\caption{\label{fig:frog1}Plutchik's wheel of emotion.}
+%\end{wrapfigure}
+
+
+
+%\spar The method for determining a tweets mood values is to do a word by word comparison of the words in the tweet to a set of words associated with each mood. If a word in the tweet exists in the list for a given mood, the value of that mood for that tweet is increased. Once every word in the tweet is processed, the values for the moods are normalized. 
+
+\vspace{1em}
+For example the tweet \emph{"I love to eat cake but I fear I will be angry after and look disgusting"} has the following normalized mood score: \vspace{1em}
+\begin{table}[ht!]
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{Joy} & \textbf{Trust} & \textbf{Fear} & \textbf{Surprise} & \textbf{Sadness} & \textit{\textbf{Disgust}} & \textit{\textbf{Anger}}  & \textbf{Anticipation} \\ \hline
+0.0          & 0.2            & 0.2           & 0.0               & 0.2              & \multicolumn{1}{c|}{0.2}  & \multicolumn{1}{c|}{0.2} &          0.0             \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+\vspace{2em}
+
+To handle the large amount of data, the sentiment analysis is implemented in the Map-Reduce framework Spark. Two months of data already results in approximately 88 million tweets. To process this size of data, we use Spark to calculate the sentiment of the tweets in a scalable fashion. The tweets are streamed into the application for both historical data as well as in periodic batches from the live stream.
     
-\spar Due to the restriction the NLTK approach was chosen. Although the movie plot descriptions are written by users, the sentiment analysis does not make sense since the estimates are around 0  and hence there is no correlation between the plot and movie success. 
     
 \end{block}
 \end{column}
 \begin{column}{\twocolwid} % The second column
 
-\begin{block}{Classification}
+\begin{block}{Prediction of Stock Prices}
 
-From our collection of movies, we try to classify them as either a Success or a Failure. An accurate definition of a movie's box office success is difficult to make, as a successful movie could have a long and profitable run in theaters after the first weekend, it could have excellent DVD sales, or it could be syndicated on television for years later. It could have all of these but not have a very profitable opening weekend. 
-We label success as: \emph{Opening Weekend Gross} $  > Budget* 0.3 $
-The best classification algorithms for this problem are Gradient Boosting and K Nearest Neighbors. 
-The Python library Scikit-Learn was used for the implementation of the machine learning algorithms. 
-The probability of correctly classifying a movie is 64\% with Gradient Boosting and 60\% with K Nearest Neighbors. 
+We attempt to correlate the daily mood with the closing price of the NASDAQ. The sentiment results from the day are analyzed using a feed forward neural network. Stock prices are aggregated with the average twitter mood data for each day, and this data is used to train the neural network. This algorithm has an average of 4.6\% error in it's prediction with a maximum error of 9.2\%. In the table below are the results of the last 7 days of the test data.
 
-\begin{figure}
-\begin{subfigure}[b]{0.2\textwidth}
-\includegraphics[width=30ex]{gb2.pdf}
-\caption{Gradient Boosting}
-\end{subfigure} \hspace{20ex}
-\begin{subfigure}[b]{0.2\textwidth}
- \includegraphics[width=30ex]{kn2.pdf}
- \caption{KNeighbors, K=15}
- \end{subfigure}
- \caption{Classification of movies, Blue is success}
-\end{figure} 
+\begin{table}[ht!]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Actual Stock Price} & \textbf{Predicted Stock Price} & \textbf{Percent Difference} \\ \hline
+42.09                       & 42.45                          & 0.008                       \\ \hline
+40.93                       & 42.25                          & 0.031                       \\ \hline
+40.93                       & 42.23                          & 0.030                       \\ \hline
+40.93                       & 42.51                          & 0.037                       \\ \hline
+38.65                       & 42.60                          & 0.092                       \\ \hline
+39.05                       & 42.24                          & 0.075                       \\ \hline
+39.88                       & 42.00                          & 0.050                       \\ \hline
+\end{tabular}
+\end{table}
+
+
+%\begin{figure}
+%\begin{subfigure}[b]{0.2\textwidth}
+%\includegraphics[width=30ex]{gb2.pdf}
+%\caption{Gradient Boosting}
+%\end{subfigure} \hspace{20ex}
+%\begin{subfigure}[b]{0.2\textwidth}
+% \includegraphics[width=30ex]{kn2.pdf}
+ %\caption{KNeighbors, K=15}
+ %\end{subfigure}
+ %\caption{Classification of movies, Blue is success}
+%\end{figure} 
 \end{block}
-\begin{block}{Tool and Features}
-The tool is a web site where users can enter information about a movie including a title, budget, premier date, director, cast, and a plot description. It is necessary to enter the names correctly, thus the functions of autocorrection and autocompletion is essential.  
-
-\begin{figure}\hspace{-10ex}
-	\begin{subfigure}[b]{0.2\textwidth}
-          \includegraphics[width=40ex]{nameFig.pdf}
-          \caption{Autocomplete and autocorrect procedure}
-          \end{subfigure}\hspace{30ex}
-          \begin{subfigure}[b]{0.2\textwidth}
-          \includegraphics[width=40ex]{toolSS.png}
-          \end{subfigure}
+\begin{block}{Interface}
+Our tweets are gathered  from historical data or from the Twitter live stream and stored into a MongoDB.  The Map-Reduce framework Spark is used to process the tweets for the sentiment analysis. Finally, the \emph{ffnet} library in Python was used to build a neural network which we fed the sentiment data from the tweets to.
+\begin{center}
+\begin{figure}
+	%\begin{subfigure}[b]{0.2\textwidth}
+          %\includegraphics[width=40ex]{nameFig.pdf}
+          %\caption{Autocomplete and autocorrect procedure}
+         % \end{subfigure}\hspace{30ex}
+          \includegraphics[width=60ex]{sitefinished.png}
+          \caption{Website with most recent stock, mood, and prediction data.}
 \end{figure}
+\end{center}
 
 \end{block}
 
 \begin{block}{Conclusions}
-\emph{The tool predicts the success of the described movie with an accuracy greater than random or na\"{\i}ve guessing. But overall the prediction is not as accurate as we thought it would be. There are other aspects of the data which could analyzed to yield better results, and a movie's success depends on other factors not included in the movie's attributes.}
+\emph{We have performed an analysis on a large social network. We implemented a scalable system to perform sentiment analysis, which the results are used to create a prediction system for future stock prices. A prediction of future stock prices is done using a neural network. Finally, the results are updated in the interface on a continual basis. While we have implemented all the requirements for running the Twitter analysis and stock predictor, we so far are unable to discover a satisfactory correlation between moods and stock prices. }
 \end{block}
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  13 NOV 2014 12:06
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  13 JAN 2015 13:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1052,10 +1052,18 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: Hyperref support is turned off
 (caption)             because hyperref has stopped early.
 )
+(/usr/local/texlive/2012/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen203
+\WF@size=\dimen204
+\c@WF@wrappedlines=\count176
+\WF@box=\box58
+\WF@everypar=\toks46
+Package: wrapfig 2003/01/31  v 3.6
+)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2012/01/12 v1.1d Sub-captions (AR)
-\c@subfigure=\count176
-\c@subtable=\count177
+\c@subfigure=\count177
+\c@subtable=\count178
 )
 \sepwid=\skip77
 \onecolwid=\skip78
@@ -1064,52 +1072,216 @@ Package: subcaption 2012/01/12 v1.1d Sub-captions (AR)
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2005/04/14 v1.61803 publication quality tables
-\heavyrulewidth=\dimen203
-\lightrulewidth=\dimen204
-\cmidrulewidth=\dimen205
-\belowrulesep=\dimen206
-\belowbottomsep=\dimen207
-\aboverulesep=\dimen208
-\abovetopsep=\dimen209
-\cmidrulesep=\dimen210
-\cmidrulekern=\dimen211
-\defaultaddspace=\dimen212
-\@cmidla=\count178
-\@cmidlb=\count179
-\@aboverulesep=\dimen213
-\@belowrulesep=\dimen214
-\@thisruleclass=\count180
-\@lastruleclass=\count181
-\@thisrulewidth=\dimen215
+\heavyrulewidth=\dimen205
+\lightrulewidth=\dimen206
+\cmidrulewidth=\dimen207
+\belowrulesep=\dimen208
+\belowbottomsep=\dimen209
+\aboverulesep=\dimen210
+\abovetopsep=\dimen211
+\cmidrulesep=\dimen212
+\cmidrulekern=\dimen213
+\defaultaddspace=\dimen214
+\@cmidla=\count179
+\@cmidlb=\count180
+\@aboverulesep=\dimen215
+\@belowrulesep=\dimen216
+\@thisruleclass=\count181
+\@lastruleclass=\count182
+\@thisrulewidth=\dimen217
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\new@ifnextchar' on input line 83.
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@@underline' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\hbox' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\mathsurround' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 86.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 86.
 
 (./poster.aux)
 \openout1 = `poster.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 83.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 83.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 86.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 86.
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Try loading font information for T1+lmss on input line 83.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 86.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1150,17 +1322,17 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 (/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count182
-\scratchdimen=\dimen216
-\scratchbox=\box58
-\nofMPsegments=\count183
-\nofMParguments=\count184
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count185
-\MPscratchDim=\dimen217
-\MPnumerator=\count186
-\makeMPintoPDFobject=\count187
-\everyMPtoPDFconversion=\toks47
+\scratchcounter=\count183
+\scratchdimen=\dimen218
+\scratchbox=\box59
+\nofMPsegments=\count184
+\nofMParguments=\count185
+\everyMPshowfont=\toks47
+\MPscratchCnt=\count186
+\MPscratchDim=\dimen219
+\MPnumerator=\count187
+\makeMPintoPDFobject=\count188
+\everyMPtoPDFconversion=\toks48
 ) (/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1177,8 +1349,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box59
-Package hyperref Info: Link coloring OFF on input line 83.
+\AtBeginShipoutBox=\box60
+Package hyperref Info: Link coloring OFF on input line 86.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
@@ -1186,11 +1358,11 @@ Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 (/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count188
+\c@section@level=\count189
 )
-LaTeX Info: Redefining \ref on input line 83.
-LaTeX Info: Redefining \pageref on input line 83.
-LaTeX Info: Redefining \nameref on input line 83.
+LaTeX Info: Redefining \ref on input line 86.
+LaTeX Info: Redefining \pageref on input line 86.
+LaTeX Info: Redefining \nameref on input line 86.
 
 (./poster.out) (./poster.out)
 \@outlinefile=\write5
@@ -1221,120 +1393,93 @@ Dictionary: translator-numbers-dictionary, Language: English
 r-theorem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 83.
+LaTeX Info: Redefining \includegraphics on input line 86.
 
 ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 83.
+LaTeX Info: Redefining \selectfont on input line 86.
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (./poster.nav)
-<logo.png, id=13, 813.0375pt x 426.59375pt>
-File: logo.png Graphic file (type png)
- <use logo.png>
-Package pdftex.def Info: logo.png used on input line 83.
-(pdftex.def)             Requested size: 337.8097pt x 177.2414pt.
-LaTeX Font Info:    Calculating math sizes for size <17.86> on input line 83.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 83.
+LaTeX Font Info:    Calculating math sizes for size <92.13> on input line 86.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 86.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 83.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 86.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 83.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 86.
 
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 83.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 86.
 
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17.86> on input line 83.
+(Font)              <92.13> on input line 86.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12.50194> on input line 83.
+(Font)              <64.4907> on input line 86.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8.93> on input line 83.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 185.
+(Font)              <46.065> on input line 86.
+LaTeX Font Info:    Calculating math sizes for size <17.86> on input line 86.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <17.86> on input line 86.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12.50194> on input line 86.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8.93> on input line 86.
+
+<logo.png, id=13, 813.0375pt x 426.59375pt>
+File: logo.png Graphic file (type png)
+ <use logo.png>
+Package pdftex.def Info: logo.png used on input line 218.
+(pdftex.def)             Requested size: 398.53249pt x 209.10435pt.
+
+<getrichlogo.png, id=14, 353.8821pt x 352.6776pt>
+File: getrichlogo.png Graphic file (type png)
+ <use getrichlogo.png>
+Package pdftex.def Info: getrichlogo.png used on input line 218.
+(pdftex.def)             Requested size: 318.82599pt x 317.74593pt.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 218.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<datafigure.pdf, id=15, 799.98875pt x 199.74625pt>
-File: datafigure.pdf Graphic file (type pdf)
- <use datafigure.pdf>
-Package pdftex.def Info: datafigure.pdf used on input line 185.
-(pdftex.def)             Requested size: 1115.89096pt x 278.66142pt.
+<tweet_filtering.pdf, id=17, 536.0025pt x 159.59625pt>
+File: tweet_filtering.pdf Graphic file (type pdf)
 
-<dataProcessingFigure.pdf, id=16, 481.8pt x 177.66376pt>
-File: dataProcessingFigure.pdf Graphic file (type pdf)
+<use tweet_filtering.pdf>
+Package pdftex.def Info: tweet_filtering.pdf used on input line 218.
+(pdftex.def)             Requested size: 1115.89096pt x 332.25917pt.
 
-<use dataProcessingFigure.pdf>
-Package pdftex.def Info: dataProcessingFigure.pdf used on input line 185.
-(pdftex.def)             Requested size: 797.06497pt x 293.94582pt.
-LaTeX Font Info:    Calculating math sizes for size <37.03> on input line 185.
+<sentiment_scoring.pdf, id=18, 572.1375pt x 276.03125pt>
+File: sentiment_scoring.pdf Graphic file (type pdf)
+
+<use sentiment_scoring.pdf>
+Package pdftex.def Info: sentiment_scoring.pdf used on input line 218.
+(pdftex.def)             Requested size: 853.09297pt x 411.58609pt.
+LaTeX Font Info:    Calculating math sizes for size <37.03> on input line 218.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <37.03> on input line 185.
+(Font)              <37.03> on input line 218.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <25.92088> on input line 185.
+(Font)              <25.92088> on input line 218.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <18.515> on input line 185.
+(Font)              <18.515> on input line 218.
 
-Overfull \hbox (25.19998pt too wide) in paragraph at lines 185--185
- [] 
- []
-
-<gb2.pdf, id=17, 922.44624pt x 842.14626pt>
-File: gb2.pdf Graphic file (type pdf)
- <use gb2.pdf>
-Package pdftex.def Info: gb2.pdf used on input line 185.
-(pdftex.def)             Requested size: 478.23898pt x 436.60786pt.
-
-Overfull \hbox (156.32129pt too wide) in paragraph at lines 185--185
-[][] 
- []
-
-<kn2.pdf, id=18, 932.48375pt x 854.19125pt>
-File: kn2.pdf Graphic file (type pdf)
- <use kn2.pdf>
-Package pdftex.def Info: kn2.pdf used on input line 185.
-(pdftex.def)             Requested size: 478.23898pt x 438.08215pt.
-
-Overfull \hbox (156.32129pt too wide) in paragraph at lines 185--185
-[][] 
- []
-
-<nameFig.pdf, id=19, 526.96875pt x 184.69pt>
-File: nameFig.pdf Graphic file (type pdf)
- <use nameFig.pdf>
-Package pdftex.def Info: nameFig.pdf used on input line 185.
-(pdftex.def)             Requested size: 637.65198pt x 223.49248pt.
-
-Overfull \hbox (315.73428pt too wide) in paragraph at lines 185--185
-[][] 
- []
-
-<toolSS.png, id=20, 965.6075pt x 476.78125pt>
-File: toolSS.png Graphic file (type png)
- <use toolSS.png>
-Package pdftex.def Info: toolSS.png used on input line 185.
-(pdftex.def)             Requested size: 637.65198pt x 314.85846pt.
-
-Overfull \hbox (315.73428pt too wide) in paragraph at lines 185--185
-[][] 
- []
-
-File: logo.png Graphic file (type png)
-<use logo.png>
-Package pdftex.def Info: logo.png used on input line 185.
-(pdftex.def)             Requested size: 337.8097pt x 177.2414pt.
+<sitefinished.png, id=19, 722.09775pt x 424.58624pt>
+File: sitefinished.png Graphic file (type png)
+ <use sitefinished.png>
+Package pdftex.def Info: sitefinished.png used on input line 218.
+(pdftex.def)             Requested size: 956.47797pt x 562.42508pt.
 
 Overfull \hbox (88.20334pt too wide) has occurred while \output is active
 []
@@ -1342,8 +1487,8 @@ Overfull \hbox (88.20334pt too wide) has occurred while \output is active
 
 [1{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
- <./logo.png> <./datafigure.pdf> <./dataProcessingFigure.pdf> <./gb2.pdf> <./kn
-2.pdf> <./nameFig.pdf> <./toolSS.png>]
+ <./logo.png> <./getrichlogo.png> <./tweet_filtering.pdf> <./sentiment_scoring.
+pdf> <./sitefinished.png>]
 \tf@nav=\write6
 \openout6 = `poster.nav'.
 
@@ -1353,37 +1498,34 @@ Overfull \hbox (88.20334pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `poster.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 186.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 186.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 219.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 219.
  (./poster.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 186.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 186.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 219.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 219.
 Package rerunfilecheck Info: File `poster.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 186.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 219.
  ) 
 Here is how much of TeX's memory you used:
- 20994 strings out of 493488
- 393270 string characters out of 3141326
- 516443 words of memory out of 3000000
- 23760 multiletter control sequences out of 15000+200000
- 70971 words of font info for 62 fonts, out of 3000000 for 9000
+ 21062 strings out of 493488
+ 394300 string characters out of 3141326
+ 514819 words of memory out of 3000000
+ 23825 multiletter control sequences out of 15000+200000
+ 87338 words of font info for 78 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 55i,18n,92p,442b,1225s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
-texlive/2012/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
-12/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2012/texmf-d
-ist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/texlive/2012/texmf-dist/fonts/type
-1/public/lm/lmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/l
-m/lmmi12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/lm/lmr17.pf
-b></usr/local/texlive/2012/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/lo
-cal/texlive/2012/texmf-dist/fonts/type1/public/lm/lmss17.pfb></usr/local/texliv
-e/2012/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2012/t
-exmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on poster.pdf (1 page, 770688 bytes).
+ 55i,17n,92p,556b,1158s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/
+texlive/2012/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/20
+12/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2012/texmf-
+dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/public/lm/lmri12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/publ
+ic/lm/lmss17.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/lm/lmss
+bx10.pfb>
+Output written on poster.pdf (1 page, 576866 bytes).
 PDF statistics:
- 277 PDF objects out of 1000 (max. 8388607)
- 177 compressed objects within 2 object streams
+ 98 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
  3 named destinations out of 1000 (max. 500000)
- 84 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 74 words of extra memory for PDF output out of 10000 (max. 10000000)
 
