@@ -20,11 +20,6 @@ urls = (
 
 )
 
-data_file_name = "data.json"
-data_file = open(data_file_name, 'r')
-json_data = data_file.read().replace("\n", "")
-#data = json.load(data_file)
-#data_file.close()
 
 
 def convert_keys_to_string(dictionary):
