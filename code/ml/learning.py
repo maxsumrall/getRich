@@ -45,22 +45,6 @@ def readData():
 
     return trainingSetInput, trainingSetResult
 
-def testData(nn, testDataInput, testDataActual):
-    #test the neural network
-    summationDifference = 0
-    summationCount = 0
-    maxDifference = 0
-
-    for i in range(0, len(testDataInput)):
-        result = net.call(testDataInput[i])
-        difference = abs(testDataActual[i]/result - 1)
-        #print "actual: " + str(testDataActual[i]) + " | NN: " + str(result) + " | difference percentage: " + str(difference)
-        summationCount += 1
-        summationDifference += abs(testDataActual[i]/result - 1)
-        maxDifference = max(difference, maxDifference)
-
-    print "Average difference: " + str(summationDifference/summationCount) + " | maximal difference percentage: " + str(maxDifference)
-
 def testDatafunc(func, testDataInput, testDataActual):
     #test the neural network
     summationDifference = 0
