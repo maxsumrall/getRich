@@ -1,9 +1,9 @@
-__author__ = 'Grabot'
-
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 import json
+import pymongo
+
 import plutchik
 
 #For getting twitter stream we created a twitter dev account that will allow us to use the API
@@ -18,14 +18,20 @@ asecret = 'icZjZQwjJEjgTEQJ2rlCy57cgY57a9Hb3EYBdjfB8CWDF'
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
+client = pymongo.MongoClient('mongodb://localhost:27017/')
+db = client.test_database
+tweet_collection = db.tweets
+
 class listener(StreamListener):
     def on_data(self, data):
         # Twitter returns data in JSON format - we need to decode it first using user name and the tweet text
         if (data.startswith('{"created_at":')):
             decoded = json.loads(data)
-            tweet = str((decoded['user']['screen_name'], decoded['text']))
+            tweet = decoded['text']
             #we send the tweet to the mood analyser who will determine the mood of the tweet based on plutchik
-            print plutchik.executeTweet(tweet)
+            #print plutchik.executeTweet(tweet)
+            #print tweet
+            tweet_collection.insert(tweet)
 
         return True
 
