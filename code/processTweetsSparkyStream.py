@@ -66,7 +66,7 @@ def SendTweets():
             result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
             conn.send(result)
             n = n + 1
-            if n%10000 == 0:
+            if n%100000 == 0:
                 currentTime = datetime.datetime.now()
                 differenceTime = currentTime-startTime
                 remainingTime = differenceTime/n*(total-n)
