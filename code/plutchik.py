@@ -25,7 +25,7 @@ class Emotion:
         inner_patern = ('|'.join(open('./plutchik/'+self.name+'.txt', 'r').read().splitlines()))
         pattern = '(' + inner_patern + ')'
         self.regex = re.compile(pattern, re.IGNORECASE)
-        self.negationRegex = re.compile(negationPatern + inner_patern, re.IGNORECASE)
+        self.negationRegex = re.compile(negationPatern + pattern, re.IGNORECASE)
 
 
 # list with the emotions
@@ -54,8 +54,6 @@ def executeTweet(tweet):
     for index, emotion in enumerate(emotions):
         val1 = executeRegex(emotion.regex, tweet)
         val2 = executeRegex(emotion.negationRegex, tweet)
-
-        # print "Negations: " + str(val2)
 
         # get the opposite emotion index
         oppositeIndex = index + 4
