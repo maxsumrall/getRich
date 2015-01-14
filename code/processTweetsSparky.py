@@ -76,8 +76,11 @@ sc = SparkContext("local[4]", "GetRich")
 ssc = StreamingContext(sc, 1)
 ssc.checkpoint("checkpoint")
 
-stream = ssc.socketTextStream("localhost", 9998)
-tweetData = stream.flatMap(lambda line: line.split("\r\n"))
+try:
+    stream = ssc.socketTextStream("localhost", 9998)
+    tweetData = stream.flatMap(lambda line: line.split("\r\n"))
+except:
+    1==1
 
 tweetData = tweetData.map(split_tweet)
 #totalTweetsPerDay = tweetData.map(lambda a: (0, 1)).updateStateByKey(lambda a, running: (sum(a)+(running or 0)))
