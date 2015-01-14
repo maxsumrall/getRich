@@ -58,14 +58,11 @@ def processResults(rdd):
         while os.path.isdir("testResults" + str(i)):
             i += 1
         rdd.saveAsTextFile("testResults" + str(i))
-        print "results!!!!!!!!!!" + str(i)
 
         # Put it in MongoDB!
         if "-m" in sys.argv:
-            print "local mongodb"
             client = pymongo.MongoClient()
         else:
-            print "giedomak.nl mongodb"
             client = pymongo.MongoClient('giedomak.nl')
         db = client.test_database
         col = db.results
