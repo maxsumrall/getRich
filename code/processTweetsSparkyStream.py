@@ -74,7 +74,7 @@ def SendTweets():
                 print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
         except:
-            print "error in tweet encoding"
+            1 == 1
 
     conn.close()
     print "Tweets send"
