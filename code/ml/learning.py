@@ -61,6 +61,23 @@ def testData(nn, testDataInput, testDataActual):
 
     print "Average difference: " + str(summationDifference/summationCount) + " | maximal difference percentage: " + str(maxDifference)
 
+def testDatafunc(func, testDataInput, testDataActual):
+    #test the neural network
+    summationDifference = 0
+    summationCount = 0
+    maxDifference = 0
+
+    for i in range(0, len(testDataInput)):
+        result = func(testDataInput[i])
+        difference = abs(testDataActual[i]/result - 1)
+        #print "actual: " + str(testDataActual[i]) + " | NN: " + str(result) + " | difference percentage: " + str(difference)
+        summationCount += 1
+        summationDifference += abs(testDataActual[i]/result - 1)
+        maxDifference = max(difference, maxDifference)
+
+    print "Average difference: " + str(summationDifference/summationCount) + " | maximal difference percentage: " + str(maxDifference)
+
+
 trainingSetInput, trainingSetResult = readData()
 testDataInput = trainingSetInput[learnData:]
 testDataActual = trainingSetResult[learnData:]
@@ -70,43 +87,44 @@ print "Genetic"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
 net.train_genetic(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testData(net, testDataInput, testDataActual)
+testDatafunc(net.call, testDataInput, testDataActual)
 
 print "bfgs"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
 net.train_bfgs(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testData(net, testDataInput, testDataActual)
+testDatafunc(net.call, testDataInput, testDataActual)
 
 print "cg"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
 net.train_cg(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testData(net, testDataInput, testDataActual)
+testDatafunc(net.call, testDataInput, testDataActual)
 
 print "momentum"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
 net.train_momentum(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testData(net, testDataInput, testDataActual)
+testDatafunc(net.call, testDataInput, testDataActual)
 
 print "rprop"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
 net.train_rprop(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testData(net, testDataInput, testDataActual)
+testDatafunc(net.call, testDataInput, testDataActual)
 
 print "tnc"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
 net.train_tnc(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testData(net, testDataInput, testDataActual)
+testDatafunc(net.call, testDataInput, testDataActual)
 
 print "Lasso Bitches!"
 clf.fit(trainingSetInput[:learnData], trainingSetResult[:learnData])
-for each in zip(testDataInput, testDataActual):
-    predicted = clf.predict(each[0])
-    print "Actual: " + str(each[1]) + " Predict: " + str(predicted) + " Difference: " + str(math.fabs(each[1] - predicted))
+testDatafunc(clf.predict, testDataInput, testDataActual)
+#for each in zip(testDataInput, testDataActual):
+#    predicted = clf.predict(each[0])
+#    print "Actual: " + str(each[1]) + " Predict: " + str(predicted) + " Difference: " + str(math.fabs(each[1] - predicted))
 
 #NX.draw(net.graph)
 #pylab.show()
