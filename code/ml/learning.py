@@ -18,7 +18,7 @@ clf = linear_model.Lasso(alpha=0.1)
 
 def readData():
     #read data
-    with open('/Users/max/Documents/getRich/data/sentiSorted.csv', 'rb') as csvfile:
+    with open('../../data/sentiSorted.csv', 'rb') as csvfile:
         rawData = csv.reader(csvfile, delimiter=';')
         rawData.next()
         for row in rawData:
