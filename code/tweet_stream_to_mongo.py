@@ -18,7 +18,7 @@ asecret = 'icZjZQwjJEjgTEQJ2rlCy57cgY57a9Hb3EYBdjfB8CWDF'
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
-client = pymongo.MongoClient('mongodb://localhost:27017/')
+client = pymongo.MongoClient('mongodb://giedomak.nl:27017/')
 db = client.test_database
 tweet_collection = db.tweets
 
@@ -26,12 +26,12 @@ class listener(StreamListener):
     def on_data(self, data):
         # Twitter returns data in JSON format - we need to decode it first using user name and the tweet text
         if (data.startswith('{"created_at":')):
+            decoded = {}
             decoded = json.loads(data)
-            tweet = decoded['text']
             #we send the tweet to the mood analyser who will determine the mood of the tweet based on plutchik
             #print plutchik.executeTweet(tweet)
-            #print tweet
-            tweet_collection.insert(tweet)
+           # print tweet
+            tweet_collection.insert({"text":decoded['text'].encode('utf-8')})
 
         return True
 
