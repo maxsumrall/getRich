@@ -2,6 +2,8 @@ import pymongo
 import socket
 import sys
 import datetime
+import codecs
+import chardet
 
 def SendTweets():
     TCP_IP = '127.0.0.1'
@@ -48,30 +50,34 @@ def SendTweets():
 
 
     #while 1:
-    try:
-        print "Waiting for client..."
-        conn, addr = s.accept()
-        print 'Connection address:', addr
+    print "Waiting for client..."
+    conn, addr = s.accept()
+    print 'Connection address:', addr
 
-        print "Sending tweets..."
-        n = 0
-        startTime = datetime.datetime.now()
-        print "Start time: " + str(startTime)
+    print "Sending tweets..."
+    n = 0
+    startTime = datetime.datetime.now()
+    print "Start time: " + str(startTime)
 
-        for tweet in tweetlist:
-            conn.send((tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n").encode("utf-8"))
+
+    for tweet in tweetlist:
+
+        try:
+            result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+            conn.send(result)
             n = n + 1
-            if n%10000 == 0:
+            if n%100000 == 0:
                 currentTime = datetime.datetime.now()
                 differenceTime = currentTime-startTime
                 remainingTime = differenceTime/n*(total-n)
                 endTime = currentTime+remainingTime
                 print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
-        conn.close()
-        print "Tweets send"
-    except:
-        print "error"
+        except:
+            1 == 1
+
+    conn.close()
+    print "Tweets send"
     s.close()
 
 if __name__ == "__main__":
