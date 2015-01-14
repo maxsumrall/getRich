@@ -9,6 +9,7 @@ import plutchik
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client.test_database
 col = db.results
+tweets_collection = db.tweets
 #today = datetime.today()
 #delta = datetime.timedelta(days=-30)
 
@@ -16,8 +17,8 @@ col = db.results
 urls = (
     '/', 'index',
     "/data", "getdata",
-    "/plutchik", "getsentiment"
-
+    "/plutchik", "getsentiment",
+    "/dbsize", "get_mongo_size"
 )
 
 
@@ -70,7 +71,10 @@ class getsentiment:
         })
         #return plutchik.executeTweet(web.input()["text"])
 
-
+class get_mongo_size:
+    def GET(self):
+        web.header('Access-Control-Allow-Origin',      '*')
+        return tweets_collection.count()
 
 
 if __name__ == "__main__":
