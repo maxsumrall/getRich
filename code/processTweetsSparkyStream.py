@@ -69,7 +69,8 @@ def SendTweets():
         except:
 
             try:
-                result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet.generation_time) + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+                result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet['_id'].generation_time)
+                + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
                 conn.send(result)
 
             except:
@@ -81,7 +82,8 @@ def SendTweets():
             differenceTime = currentTime-startTime
             remainingTime = differenceTime/n*(total-n)
             endTime = currentTime+remainingTime
-            print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
+            print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: "
+            + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
     conn.close()
     print "Tweets send"
