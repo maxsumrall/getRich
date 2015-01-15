@@ -54,11 +54,6 @@ def makeJson(line):
 def processResults(rdd):
     print rdd.collect()
     if(len(rdd.collect()) > 0):
-        i = 0
-        while os.path.isdir("testResults" + str(i)):
-            i += 1
-        rdd.saveAsTextFile("testResults" + str(i))
-
         # Put it in MongoDB!
         if "-m" in sys.argv:
             client = pymongo.MongoClient()
