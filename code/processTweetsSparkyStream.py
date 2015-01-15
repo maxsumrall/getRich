@@ -4,6 +4,7 @@ import sys
 import datetime
 import codecs
 import chardet
+import calendar
 
 def SendTweets():
     TCP_IP = '127.0.0.1'
@@ -39,7 +40,7 @@ def SendTweets():
     if total > 0:
         tweetlist = tweets.find(limit=total)
     else:
-        tweetlist = tweets.find().sort('_id', -1)
+        tweetlist = tweets.find().sort('_id')
         total = tweets.count()
 
     print "Start TCP server"
@@ -59,29 +60,36 @@ def SendTweets():
     startTime = datetime.datetime.now()
     print "Start time: " + str(startTime)
 
+    # oldCount = tweetlist.count()
+    last_timestamp = 0
 
-    for tweet in tweetlist:
+    while True:
+        for tweet in tweetlist:
+            if calendar.timegm(tweet['_id'].generation_time.utctimetuple()) > last_timestamp:
+                try:
+                    result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+                    conn.send(result)
 
-        try:
-            result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
-            conn.send(result)
+                except:
 
-        except:
+                    try:
+                        result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet['_id'].generation_time) + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+                        conn.send(result)
 
-            try:
-                result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet['_id'].generation_time) + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
-                conn.send(result)
+                    except:
+                        1==1
 
-            except:
-                1==1
+                n = n + 1
+                if n%100000 == 0:
+                    currentTime = datetime.datetime.now()
+                    differenceTime = currentTime-startTime
+                    remainingTime = differenceTime/n*(total-n)
+                    endTime = currentTime+remainingTime
+                    print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
-        n = n + 1
-        if n%100000 == 0:
-            currentTime = datetime.datetime.now()
-            differenceTime = currentTime-startTime
-            remainingTime = differenceTime/n*(total-n)
-            endTime = currentTime+remainingTime
-            print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
+                last_timestamp = calendar.timegm(tweet['_id'].generation_time.utctimetuple())
+
+        tweetlist = tweets.find().sort('_id')
 
     conn.close()
     print "Tweets send"
