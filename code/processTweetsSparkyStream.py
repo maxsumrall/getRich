@@ -1,10 +1,8 @@
 import pymongo
 import socket
 import sys
-import datetime
-import codecs
-import chardet
-import calendar
+from datetime import tzinfo, datetime
+import pytz
 
 def SendTweets():
     TCP_IP = '127.0.0.1'
@@ -40,7 +38,7 @@ def SendTweets():
     if total > 0:
         tweetlist = tweets.find(limit=total)
     else:
-        tweetlist = tweets.find().sort('_id')
+        tweetlist = tweets.find().sort('_id', -1).limit(500000)
         total = tweets.count()
 
     print "Start TCP server"
@@ -57,39 +55,40 @@ def SendTweets():
 
     print "Sending tweets..."
     n = 0
-    startTime = datetime.datetime.now()
+    startTime = datetime.now()
     print "Start time: " + str(startTime)
 
     # oldCount = tweetlist.count()
-    last_timestamp = datetime.datetime(2010,1,1)
+    pacific = pytz.timezone("US/Pacific")
+    last_timestamp = datetime(2010,1,1,0,0,0,0,pacific)
 
     while True:
         for tweet in tweetlist:
-            if tweet['_id'].generation_time > last_timestamp:
+            # if tweet['_id'].generation_time > last_timestamp:
+            try:
+                result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+                conn.send(result)
+
+            except:
+
                 try:
-                    result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+                    result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet['_id'].generation_time) + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
                     conn.send(result)
 
                 except:
+                    1==1
 
-                    try:
-                        result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet['_id'].generation_time) + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
-                        conn.send(result)
+            n = n + 1
+            if n%100000 == 0:
+                currentTime = datetime.now()
+                differenceTime = currentTime-startTime
+                remainingTime = differenceTime/n*(total-n)
+                endTime = currentTime+remainingTime
+                print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
-                    except:
-                        1==1
+            # last_timestamp = tweet['_id'].generation_time
 
-                n = n + 1
-                if n%100000 == 0:
-                    currentTime = datetime.datetime.now()
-                    differenceTime = currentTime-startTime
-                    remainingTime = differenceTime/n*(total-n)
-                    endTime = currentTime+remainingTime
-                    print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
-
-                last_timestamp = tweet['_id'].generation_time
-
-        tweetlist = tweets.find().sort('_id')
+        tweetlist = tweets.find().sort('_id', -1).limit(500000)
 
     conn.close()
     print "Tweets send"
