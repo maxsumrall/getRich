@@ -61,11 +61,11 @@ def SendTweets():
     print "Start time: " + str(startTime)
 
     # oldCount = tweetlist.count()
-    last_timestamp = 0
+    last_timestamp = datetime.datetime(2010,1,1)
 
     while True:
         for tweet in tweetlist:
-            if calendar.timegm(tweet['_id'].generation_time.utctimetuple()) > last_timestamp:
+            if tweet['_id'].generation_time > last_timestamp:
                 try:
                     result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
                     conn.send(result)
@@ -87,7 +87,7 @@ def SendTweets():
                     endTime = currentTime+remainingTime
                     print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
-                last_timestamp = calendar.timegm(tweet['_id'].generation_time.utctimetuple())
+                last_timestamp = tweet['_id'].generation_time
 
         tweetlist = tweets.find().sort('_id')
 
