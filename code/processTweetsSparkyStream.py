@@ -39,8 +39,8 @@ def SendTweets():
     if total > 0:
         tweetlist = tweets.find(limit=total)
     else:
-        tweetlist = tweets.find()
-        total = tweetlist.count()
+        tweetlist = tweets.find().sort('_id', -1)
+        total = tweets.count()
 
     print "Start TCP server"
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -65,16 +65,23 @@ def SendTweets():
         try:
             result = str(tweet["created_at"] + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
             conn.send(result)
-            n = n + 1
-            if n%100000 == 0:
-                currentTime = datetime.datetime.now()
-                differenceTime = currentTime-startTime
-                remainingTime = differenceTime/n*(total-n)
-                endTime = currentTime+remainingTime
-                print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
         except:
-            1 == 1
+
+            try:
+                result = str('{dt:%a} {dt:%b} {dt:%d} {dt:%H}:{dt:%M}:{dt:%S} +0000 {dt:%Y}'.format(dt=tweet.generation_time) + ";" + tweet["text"].replace("\r", " ").replace("\n", " ") + "\r\n")
+                conn.send(result)
+
+            except:
+                1==1
+
+        n = n + 1
+        if n%100000 == 0:
+            currentTime = datetime.datetime.now()
+            differenceTime = currentTime-startTime
+            remainingTime = differenceTime/n*(total-n)
+            endTime = currentTime+remainingTime
+            print "Send " + str(n) + "/" + str(total) + " tweets... (running time: " + str(differenceTime) + ", remaining time: " + str(remainingTime) + ", end time: " + str(endTime) + ")"
 
     conn.close()
     print "Tweets send"
