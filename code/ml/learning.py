@@ -107,6 +107,10 @@ def testDatafunc(learnfunc, func, testDataInput, testDataActual, testDataActualD
         result = func(testDataInput[i])
         difference = abs(testDataActual[i]/result - 1)
         print str(i+learnDaysBack) + " " + testDataActualDates[i] + ": actual: " + str(testDataActual[i]) + " | NN: " + str(result) + " | difference percentage: " + str(difference)
+
+        # Put result in mongodb
+        results.update({"_id": str(testDataActualDates[i])}, {"$set": {"prediction":float(result[0])}})
+
         summationCount += 1
         summationDifference += abs(testDataActual[i]/result - 1)
         maxDifference = max(difference, maxDifference)
