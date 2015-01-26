@@ -40,20 +40,22 @@ def readData():
     #     for row in rawData:
     #         data.append(row[1:])
     # Read from mongodb
+    lastStock = 0;
     for i in range(250):
         date = (datetime.today() + timedelta(days=-i))
         date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
         try:
             find = convert_keys_to_string(results.find({'x':date_key}).next())
-            prepared = [ find['joy'],find['trust'],find['fear'],find['surprise'],find['sadness'],find['disgust'],
-                find['anger'],find['anticipation'],find['Stock'] ]
-            data.append( prepared )
+            prepared = [find['joy'], find['trust'], find['fear'], find['surprise'], find['sadness'], find['disgust'],
+                find['anger'], find['anticipation'], find['Stock']]
+            if prepared[8] == 0:
+                prepared[8] = lastStock
+            lastStock = prepared[8]
+            data.append(prepared)
             #data[-1]['x'] = str(data[-1]['x'])
             # del data[date_key]["_id"]
         except:
             pass
-
-    print data
 
 
     #convert data so it can be pushed in to the neural network
@@ -77,13 +79,16 @@ def readData():
 
     return trainingSetInput, trainingSetResult
 
-def testDatafunc(func, testDataInput, testDataActual):
+def testDatafunc(learnfunc, func, testDataInput, testDataActual):
     #test the neural network
     summationDifference = 0
     summationCount = 0
     maxDifference = 0
 
-    for i in range(0, len(testDataInput)):
+    for i in range(7, len(testDataInput)):
+        learnInput = testDataInput[0:i]
+        learnActual = testDataActual[0:i]
+        learnfunc(learnInput, learnActual)
         result = func(testDataInput[i])
         difference = abs(testDataActual[i]/result - 1)
         #print "actual: " + str(testDataActual[i]) + " | NN: " + str(result) + " | difference percentage: " + str(difference)
@@ -99,48 +104,40 @@ testDataInput = trainingSetInput[learnData:]
 testDataActual = trainingSetResult[learnData:]
 
 #create and train neural network
-print "Genetic"
+
+'''print "Genetic"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
-net.train_genetic(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(net.call, testDataInput, testDataActual)
+testDatafunc(net.train_genetic, net.call, trainingSetInput, trainingSetResult)
 
 print "bfgs"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
-net.train_bfgs(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(net.call, testDataInput, testDataActual)
+testDatafunc(net.train_bfgs, net.call, trainingSetInput, trainingSetResult)
 
 print "cg"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
-net.train_cg(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(net.call, testDataInput, testDataActual)
+testDatafunc(net.train_cg, net.call, trainingSetInput, trainingSetResult)
 
 print "momentum"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
-net.train_momentum(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(net.call, testDataInput, testDataActual)
+testDatafunc(net.train_momentum, net.call, trainingSetInput, trainingSetResult)
 
 print "rprop"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
-net.train_rprop(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(net.call, testDataInput, testDataActual)
+testDatafunc(net.train_rprop, net.call, trainingSetInput, trainingSetResult)
+'''
 
 print "tnc"
 conec = mlgraph(networkFormation)
 net = ffnet(conec)
-net.train_tnc(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(net.call, testDataInput, testDataActual)
+testDatafunc(net.train_tnc, net.call, trainingSetInput, trainingSetResult)
 
-print "Lasso Bitches!"
-clf.fit(trainingSetInput[:learnData], trainingSetResult[:learnData])
-testDatafunc(clf.predict, testDataInput, testDataActual)
-#for each in zip(testDataInput, testDataActual):
-#    predicted = clf.predict(each[0])
-#    print "Actual: " + str(each[1]) + " Predict: " + str(predicted) + " Difference: " + str(math.fabs(each[1] - predicted))
+#print "Lasso Bitches!"
+#testDatafunc(clf.fit, clf.predict, trainingSetInput, trainingSetResult)
 
 #NX.draw(net.graph)
 #pylab.show()
