@@ -54,20 +54,20 @@ def readData():
             lastPrepared = prepared[1]
 
             data.append(prepared)
-            print str(i) + " Yes"
+            print str(i) + " " + date_key + " Yes"
             #data[-1]['x'] = str(data[-1]['x'])
             # del data[date_key]["_id"]
         except:
             prepared = date_key, lastPrepared
             data.append(prepared)
-            print str(i) + " NOPE"
+            print str(i) + " " + date_key + " NOPE"
 
 
     #convert data so it can be pushed in to the neural network
     trainingSetInput = []
     trainingSetResult = []
     datesResult = []
-    for i in range(learnDaysBack, len(data)+learnData):
+    for i in range(learnDaysBack, len(data)):
         inputSet = []
         for j in range(0, learnDaysBack):
             inputSet.extend(data[i-learnDaysBack+j][1])
@@ -106,7 +106,7 @@ def testDatafunc(learnfunc, func, testDataInput, testDataActual, testDataActualD
         learnfunc(learnInput, learnActual)
         result = func(testDataInput[i])
         difference = abs(testDataActual[i]/result - 1)
-        print str(i) + " " + testDataActualDates[i] + ": actual: " + str(testDataActual[i]) + " | NN: " + str(result) + " | difference percentage: " + str(difference)
+        print str(i+learnDaysBack) + " " + testDataActualDates[i] + ": actual: " + str(testDataActual[i]) + " | NN: " + str(result) + " | difference percentage: " + str(difference)
         summationCount += 1
         summationDifference += abs(testDataActual[i]/result - 1)
         maxDifference = max(difference, maxDifference)
@@ -115,9 +115,6 @@ def testDatafunc(learnfunc, func, testDataInput, testDataActual, testDataActualD
 
 
 trainingSetInput, trainingSetResult, trainingSetResultDates = readData()
-testDataInput = trainingSetInput[learnData:]
-testDataActual = trainingSetResult[learnData:]
-
 #create and train neural network
 
 '''print "Genetic"
