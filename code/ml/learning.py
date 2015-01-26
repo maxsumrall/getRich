@@ -4,8 +4,17 @@ import networkx as NX
 import math
 import pylab
 import csv
+from datetime import *
+import pymongo
 
-def converString(x): return float(x)
+client = pymongo.MongoClient('giedomak.nl')
+db = client.test_database
+results = db.results
+print results
+
+def converString(x):
+    print x
+    return float(x)
 
 data = []
 
@@ -16,13 +25,36 @@ learnData = -7
 networkFormation = (learnDaysBack*9,20,10,1);
 clf = linear_model.Lasso(alpha=0.1)
 
+def convert_keys_to_string(dictionary):
+    """Recursively converts dictionary keys to strings."""
+    if not isinstance(dictionary, dict):
+        return dictionary
+    return dict((str(k).replace("\'", "\""), convert_keys_to_string(v))
+        for k, v in dictionary.items())
+
 def readData():
     #read data
-    with open('../../data/sentiSorted.csv', 'rb') as csvfile:
-        rawData = csv.reader(csvfile, delimiter=';')
-        rawData.next()
-        for row in rawData:
-            data.append(row[1:])
+    # with open('../../data/sentiSorted.csv', 'rb') as csvfile:
+    #     rawData = csv.reader(csvfile, delimiter=';')
+    #     rawData.next()
+    #     for row in rawData:
+    #         data.append(row[1:])
+    # Read from mongodb
+    for i in range(250):
+        date = (datetime.today() + timedelta(days=-i))
+        date_key = str(date.day) + "/" + str(date.month) + "/" + str(date.year)
+        try:
+            find = convert_keys_to_string(results.find({'x':date_key}).next())
+            prepared = [ find['joy'],find['trust'],find['fear'],find['surprise'],find['sadness'],find['disgust'],
+                find['anger'],find['anticipation'],find['Stock'] ]
+            data.append( prepared )
+            #data[-1]['x'] = str(data[-1]['x'])
+            # del data[date_key]["_id"]
+        except:
+            pass
+
+    print data
+
 
     #convert data so it can be pushed in to the neural network
     trainingSetInput = []
